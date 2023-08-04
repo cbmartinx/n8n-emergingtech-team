@@ -113,18 +113,7 @@
       "main": [
         [
           {
-            "node": "Set",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set": {
-      "main": [
-        [
-          {
-            "node": "Airtable - Tokens",
+            "node": "Set - Tokens",
             "type": "main",
             "index": 0
           }
@@ -136,6 +125,17 @@
         [
           {
             "node": "Set - Draft Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Tokens": {
+      "main": [
+        [
+          {
+            "node": "Airtable - Tokens",
             "type": "main",
             "index": 0
           }
@@ -154,7 +154,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -180,
+        -140,
         580
       ]
     },
@@ -224,7 +224,7 @@
             },
             {
               "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: \n\nQ: What is the dollar amount cross-default threshold in the following reference text: (g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\nA: $55,000,000\n\nQ: What is the dollar amount cross-default threshold in the following reference text: \"{{ $json.fields.cd_kira }}\"\nA: "
+              "value": "=You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here is the provision: \"{{ $json.cd_kira }}\""
             }
           ]
         },
@@ -250,7 +250,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        680,
+        660,
         460
       ]
     },
@@ -264,11 +264,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35",
+              "name": "prompt_35_1",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35",
+              "name": "cd_35_1",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -280,7 +280,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        900,
+        860,
         460
       ]
     },
@@ -295,7 +295,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        680,
+        660,
         660
       ]
     },
@@ -309,11 +309,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4",
+              "name": "prompt_4_1",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4",
+              "name": "cd_4_1",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -325,7 +325,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        900,
+        860,
         660
       ]
     },
@@ -739,7 +739,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        1120,
+        1060,
         460
       ],
       "credentials": {
@@ -1144,7 +1144,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        1120,
+        1060,
         660
       ],
       "credentials": {
@@ -1549,7 +1549,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        900,
+        860,
         860
       ],
       "credentials": {
@@ -1558,32 +1558,6 @@
           "name": "[CM] Airtable"
         }
       }
-    },
-    {
-      "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
-              "name": "id",
-              "value": "={{ $json.id }}"
-            },
-            {
-              "name": "input_token_count",
-              "value": "={{ $json.input_token_count }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "b58a4d8b-fd86-4d87-b3ff-c36211a362b9",
-      "name": "Set",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
-        680,
-        860
-      ]
     },
     {
       "parameters": {
@@ -1613,7 +1587,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        40,
+        60,
         580
       ],
       "credentials": {
@@ -1622,6 +1596,32 @@
           "name": "[CM] Airtable"
         }
       }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "input_token_count_1",
+              "value": "={{ $json.input_token_count }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b58a4d8b-fd86-4d87-b3ff-c36211a362b9",
+      "name": "Set - Tokens",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        660,
+        860
+      ]
     }
   ],
   "pinData": {},
@@ -1631,6 +1631,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-04T15:55:16.438Z",
-  "versionId": "1553230c-743c-4e34-9e7f-50e20215adbd"
+  "updatedAt": "2023-08-04T21:17:22.353Z",
+  "versionId": "daae3f36-f463-4c12-b685-722eeb805012"
 }
