@@ -1,0 +1,719 @@
+{
+  "active": true,
+  "connections": {
+    "Get list of filings": {
+      "main": [
+        [
+          {
+            "node": "Get list of XML links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get list of XML links": {
+      "main": [
+        [
+          {
+            "node": "Get XML files",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Add links to JSON",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Get Index Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get XML files": {
+      "main": [
+        [
+          {
+            "node": "Convert to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to JSON": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys - Remove ns2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add links to JSON": {
+      "main": [
+        [
+          {
+            "node": "Add Date & Time to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Index Page": {
+      "main": [
+        [
+          {
+            "node": "Extract Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Add Date & Time to JSON",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Add Date & Time to JSON": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "De-Dupe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get list of filings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "De-Dupe": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys - Remove ns2": {
+      "main": [
+        [
+          {
+            "node": "Add links to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-04T14:09:17.893Z",
+  "id": "oqltb7ouP5lEsGhz",
+  "name": "[Prod] SEC Form 144 to Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=144",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Latham Watkins LLP chris.martin@lw.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "98dff09e-30df-46d4-a6d3-7f5df6bf2c75",
+      "name": "Get list of filings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -860,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function getLinks(html) {\n  const regex = /\\/Archives\\/edgar\\/data\\/[^\\s\"<>]+/g;\n  return Array.from(html.matchAll(regex), m => m[0]);\n}\n\nfunction transformURL(url) {\n  const urlPattern = /(\\d{10})-(\\d{2})-(\\d{6})-index.html$/;\n  const replacementText = '$1$2$3/primary_doc.xml';\n  return url.replace(urlPattern, replacementText);\n}\n\nconst inputJson = items[0].json;\nconst htmlString = inputJson.data;\nconst links = getLinks(htmlString);\n\nconst baseURL = \"https://www.sec.gov\";\n\nreturn links.map(link => {\n  const fullLink = baseURL + link;\n  const transformedLink = transformURL(fullLink);\n  return { json: { index_link: fullLink, primary_doc_link: transformedLink } };\n});\n"
+      },
+      "id": "47eb6a2f-9cce-41b5-a57e-7dd3b355505a",
+      "name": "Get list of XML links",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.primary_doc_link }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Latham Watkins LLP chris.martin@lw.com"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 9
+            }
+          }
+        }
+      },
+      "id": "894d4c83-32c8-4c70-8066-c6d40d5636ab",
+      "name": "Get XML files",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -860,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "id": "4bedbc05-7efa-4e66-af14-62d4abbeee88",
+      "name": "Convert to JSON",
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "4fad0432-2b52-4f21-a388-999fe6d89bfa",
+      "name": "Add links to JSON",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -1060,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.index_link }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Latham Watkins LLP chris.martin@lw.com"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 9
+            }
+          }
+        }
+      },
+      "id": "33f5298d-5905-42b4-9047-4bfbee44cad5",
+      "name": "Get Index Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -460,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "001fb898-e038-4864-84b4-f86fbdc78b9c",
+      "name": "Add Date & Time to JSON",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -860,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Extracting the date and time from the HTML content using regular expressions\nconst html = item.json.data;\n\n// Regular expressions to match the date and time patterns\nconst dateRegex = /Filing Date<\\/div>\\s+<div class=\"info\">(\\d{4}-\\d{2}-\\d{2})/;\nconst timeRegex = /Accepted<\\/div>\\s+<div class=\"info\">\\d{4}-\\d{2}-\\d{2} (\\d{2}:\\d{2}:\\d{2})/;\n\n// Extracting the date and time values using the regular expressions\nconst filingDateMatch = html.match(dateRegex);\nconst filingTimeMatch = html.match(timeRegex);\n\n// Check if the matches were found and extract the values\nconst filingDate = filingDateMatch ? filingDateMatch[1] : null;\nconst filingTime = filingTimeMatch ? filingTimeMatch[1] : null;\n\n// Create a new object with only the desired properties\nconst output = {\n  filing_date: filingDate,\n  filing_time: filingTime,\n};\n\nreturn output;\n"
+      },
+      "id": "07d5df7a-0689-4812-84ae-43d22150c73b",
+      "name": "Extract Date & Time",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1c26oTxEBY2UpS-TCW0m7rDBXvMDsBzSupIfG5nxn1b4",
+          "mode": "list",
+          "cachedResultName": "Forms 144",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c26oTxEBY2UpS-TCW0m7rDBXvMDsBzSupIfG5nxn1b4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 381187960,
+          "mode": "list",
+          "cachedResultName": "July 2023",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c26oTxEBY2UpS-TCW0m7rDBXvMDsBzSupIfG5nxn1b4/edit#gid=381187960"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "Issuer": "={{ $json.edgarSubmission.formData.issuerInfo.issuerName }}",
+            "Issuer SEC File No.": "={{ $json.edgarSubmission.formData.issuerInfo.secFileNumber }}",
+            "Issuer CIK": "={{ $json.edgarSubmission.formData.issuerInfo.issuerCik }}",
+            "Filer CIK": "={{ $json.edgarSubmission.headerData.filerInfo.filer.filerCredentials.cik }}",
+            "Person": "={{ $json.edgarSubmission.formData.issuerInfo.nameOfPersonForWhoseAccountTheSecuritiesAreToBeSold }}",
+            "Relationship": "={{ $json.edgarSubmission.formData.issuerInfo.relationshipsToIssuer.relationshipToIssuer }}",
+            "Class of Securities": "={{ $json.edgarSubmission.formData.securitiesInformation.securitiesClassTitle }}",
+            "Description of Units Sold": "={{ $json.edgarSubmission.formData.securitiesToBeSold }}",
+            "Broker Name": "={{ $json.edgarSubmission.formData.securitiesInformation.brokerOrMarketmakerDetails.name }}",
+            "Broker Address": "={{ $json.edgarSubmission.formData.securitiesInformation.brokerOrMarketmakerDetails.address }}",
+            "parameters.columns.value[\"Units\n(No. Sold)\"]": "=",
+            "parameters.columns.value[\"Units\n($ Value)\"]": "=",
+            "Sale Date": "={{ $json.edgarSubmission.formData.securitiesInformation.approxSaleDate }}",
+            "Notice Date": "={{ $json.edgarSubmission.formData.noticeSignature.noticeDate }}",
+            "parameters.columns.value[\"Filing\nTime\"]": "=",
+            "Filing URL": "={{ $json.index_link }}",
+            "parameters.columns.value[\"Filing\nDate\"]": "=",
+            "Nature of Acquisition Transaction": "={{ $json.edgarSubmission.formData.securitiesToBeSold.natureOfAcquisitionTransaction }}",
+            "Plan Adoption Date": "={{ $json.edgarSubmission.formData.noticeSignature.planAdoptionDates.planAdoptionDate }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Issuer",
+              "displayName": "Issuer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Issuer SEC File No.",
+              "displayName": "Issuer SEC File No.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Issuer CIK",
+              "displayName": "Issuer CIK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Filer CIK",
+              "displayName": "Filer CIK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Person",
+              "displayName": "Person",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Relationship",
+              "displayName": "Relationship",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Class of Securities",
+              "displayName": "Class of Securities",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description of Units Sold",
+              "displayName": "Description of Units Sold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Broker Name",
+              "displayName": "Broker Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Broker Address",
+              "displayName": "Broker Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Units\n(No. Sold)",
+              "displayName": "Units\n(No. Sold)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Units\n($ Value)",
+              "displayName": "Units\n($ Value)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Filing\nDate",
+              "displayName": "Filing\nDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Filing\nTime",
+              "displayName": "Filing\nTime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notice Date",
+              "displayName": "Notice Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sale Date",
+              "displayName": "Sale Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nature of Acquisition Transaction",
+              "displayName": "Nature of Acquisition Transaction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plan Adoption Date",
+              "displayName": "Plan Adoption Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Filing URL",
+              "displayName": "Filing URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      },
+      "id": "b64b91d4-4920-4765-8fa6-1441ef50bf16",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -260,
+        800
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lMnR0Oj2mNgH09Mh",
+          "name": "[CM] Google Sheets (mar.fm)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "issuer-name",
+              "value": "={{ $json.edgarSubmission.formData.issuerInfo.issuerName }}"
+            },
+            {
+              "name": "issuer-sec-file-no",
+              "value": "={{ $json.edgarSubmission.formData.issuerInfo.secFileNumber }}"
+            },
+            {
+              "name": "issuer-cik",
+              "value": "={{ $json.edgarSubmission.formData.issuerInfo.issuerCik }}"
+            },
+            {
+              "name": "filer-cik",
+              "value": "={{ $json.edgarSubmission.headerData.filerInfo.filer.filerCredentials.cik }}"
+            },
+            {
+              "name": "person-name",
+              "value": "={{ $json.edgarSubmission.formData.issuerInfo.nameOfPersonForWhoseAccountTheSecuritiesAreToBeSold }}"
+            },
+            {
+              "name": "relationship-to-issuer",
+              "value": "={{ $json.edgarSubmission.formData.issuerInfo.relationshipsToIssuer.relationshipToIssuer }}"
+            },
+            {
+              "name": "class-of-securities",
+              "value": "={{ $json.edgarSubmission.formData.securitiesInformation.securitiesClassTitle }}"
+            },
+            {
+              "name": "description-of-units-sold",
+              "value": "={{ $json.edgarSubmission.formData.securitiesToBeSold }}"
+            },
+            {
+              "name": "broker-name",
+              "value": "={{ $json.edgarSubmission.formData.securitiesInformation.brokerOrMarketmakerDetails.name }}"
+            },
+            {
+              "name": "broker-address",
+              "value": "={{ $json.edgarSubmission.formData.securitiesInformation.brokerOrMarketmakerDetails.address }}"
+            },
+            {
+              "name": "units-no-sold",
+              "value": "={{ $json.edgarSubmission.formData.securitiesInformation.noOfUnitsSold }}"
+            },
+            {
+              "name": "units-dollar-value",
+              "value": "={{ $json.edgarSubmission.formData.securitiesInformation.aggregateMarketValue }}"
+            },
+            {
+              "name": "filing-date",
+              "value": "={{ $json.filing_date }}"
+            },
+            {
+              "name": "filing-time",
+              "value": "={{ $json.filing_time }}"
+            },
+            {
+              "name": "notice-date",
+              "value": "={{ $json.edgarSubmission.formData.noticeSignature.noticeDate }}"
+            },
+            {
+              "name": "sale-date",
+              "value": "={{ $json.edgarSubmission.formData.securitiesInformation.approxSaleDate }}"
+            },
+            {
+              "name": "nature-of-acquisition-transaction",
+              "value": "={{ $json.edgarSubmission.formData.securitiesToBeSold.natureOfAcquisitionTransaction }}"
+            },
+            {
+              "name": "plan-adoption-date",
+              "value": "={{ $json.edgarSubmission.formData.noticeSignature.planAdoptionDates.planAdoptionDate }}"
+            },
+            {
+              "name": "filing-url",
+              "value": "={{ $json.index_link }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8c115601-a282-4e86-8f74-c4a4dc52db40",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "2 6 * * 2,3,4,5,6"
+            }
+          ]
+        }
+      },
+      "id": "d9cf63ae-44cf-4a4a-85fd-1f0b6f134194",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1060,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "removeDuplicates",
+        "compare": "selectedFields",
+        "fieldsToCompare": {
+          "fields": [
+            {
+              "fieldName": "['issuer-cik']"
+            },
+            {
+              "fieldName": "['filer-cik']"
+            },
+            {
+              "fieldName": "['filing-date']"
+            },
+            {
+              "fieldName": "['filing-time']"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9eec523b-e191-4cef-bda4-e116c6450fe0",
+      "name": "De-Dupe",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.2,
+      "position": [
+        -460,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "additionalOptions": {
+          "regexReplacement": {
+            "replacements": [
+              {
+                "searchRegex": "=ns2:(.*)",
+                "replaceRegex": "=$1",
+                "options": {}
+              }
+            ]
+          }
+        }
+      },
+      "id": "0174a71d-777a-4521-9007-bd852b183aaa",
+      "name": "Rename Keys - Remove ns2",
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        620
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-08-04T15:25:46.100Z",
+  "versionId": "bfd1dc16-07ac-45a2-ac67-1c6e937cb2a8"
+}
