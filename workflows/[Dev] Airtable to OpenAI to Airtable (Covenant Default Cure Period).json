@@ -1,0 +1,1644 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Merge - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Draft Prompt": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - GPT-3.5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OpenAI - GPT-4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge - GPT-4",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "GPT-Tokenizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Set - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Airtable - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Set - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Airtable - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-Tokenizer": {
+      "main": [
+        [
+          {
+            "node": "Set - Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Set - Draft Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Tokens": {
+      "main": [
+        [
+          {
+            "node": "Airtable - Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-07T16:06:31.520Z",
+  "id": "GgCb6hN8wR7rldnE",
+  "name": "[Dev] Airtable to OpenAI to Airtable (Covenant Default Cure Period)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b6448567-9174-4695-993d-8208ca1594e3",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.prompt }}"
+            },
+            {
+              "role": "system",
+              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e83bf49f-85cc-4902-972d-b2be1cb7efe7",
+      "name": "OpenAI - GPT-4",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        460,
+        660
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "j5vdhSbBHJIsVcNw",
+          "name": "[CM] [$] OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "prompt": {
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000"
+            },
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f8ff7003-2d49-44bb-9e61-57f850263544",
+      "name": "OpenAI - GPT-3.5",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "j5vdhSbBHJIsVcNw",
+          "name": "[CM] [$] OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt",
+              "value": "=Q: What is the dollar amount cross-default threshold in the following reference text: \"{{ $json.cd_kira }}\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f3130c5c-2b50-4413-be85-e515d359c09e",
+      "name": "Set - Draft Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        240,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "1cf14568-7935-487f-b531-834752ffb1b2",
+      "name": "Merge - GPT-3.5",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt_35_2",
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}"
+            },
+            {
+              "name": "cd_35_2r",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d0d14b2c-69a2-40e9-bf24-97dfd691b210",
+      "name": "Set - GPT-3.5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        860,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "7fa8e624-a039-4da8-a065-8924a0244810",
+      "name": "Merge - GPT-4",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt_4_2",
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}"
+            },
+            {
+              "name": "cd_4_2r",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0f0861a0-061c-4d09-8528-f4cfca9132a6",
+      "name": "Set - GPT-4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        860,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "countTokens",
+        "inputString": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}",
+        "destinationKey": "input_token_count"
+      },
+      "id": "180d282f-0702-43e2-8007-a802da210d1b",
+      "name": "GPT-Tokenizer",
+      "type": "CUSTOM.gptTokenizer",
+      "typeVersion": 1,
+      "position": [
+        460,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblplAUlOtauemrks",
+          "mode": "list",
+          "cachedResultName": "Cross Default",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "cd_file_name",
+              "displayName": "cd_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_issuer",
+              "displayName": "cd_issuer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_kira",
+              "displayName": "cd_kira",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_human",
+              "displayName": "cd_human",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35",
+              "displayName": "cd_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_1",
+              "displayName": "cd_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2",
+              "displayName": "cd_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2r",
+              "displayName": "cd_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4",
+              "displayName": "cd_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_1",
+              "displayName": "cd_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2",
+              "displayName": "cd_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2r",
+              "displayName": "cd_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35",
+              "displayName": "prompt_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_1",
+              "displayName": "prompt_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2",
+              "displayName": "prompt_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2r",
+              "displayName": "prompt_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_cost",
+              "displayName": "prompt_35_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_1",
+              "displayName": "prompt_35_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2",
+              "displayName": "prompt_35_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2r",
+              "displayName": "prompt_35_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4",
+              "displayName": "prompt_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_1",
+              "displayName": "prompt_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2",
+              "displayName": "prompt_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2r",
+              "displayName": "prompt_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_cost",
+              "displayName": "prompt_4_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_1",
+              "displayName": "prompt_4_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2",
+              "displayName": "prompt_4_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2r",
+              "displayName": "prompt_4_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_1",
+              "displayName": "input_token_count_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2",
+              "displayName": "input_token_count_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2r",
+              "displayName": "input_token_count_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7d6fab87-1163-4b87-9c4d-3e65d4862542",
+      "name": "Airtable - GPT-3.5",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        460
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblplAUlOtauemrks",
+          "mode": "list",
+          "cachedResultName": "Cross Default",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "cd_file_name",
+              "displayName": "cd_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_issuer",
+              "displayName": "cd_issuer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_kira",
+              "displayName": "cd_kira",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_human",
+              "displayName": "cd_human",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35",
+              "displayName": "cd_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_1",
+              "displayName": "cd_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2",
+              "displayName": "cd_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2r",
+              "displayName": "cd_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4",
+              "displayName": "cd_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_1",
+              "displayName": "cd_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2",
+              "displayName": "cd_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2r",
+              "displayName": "cd_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35",
+              "displayName": "prompt_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_1",
+              "displayName": "prompt_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2",
+              "displayName": "prompt_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2r",
+              "displayName": "prompt_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_cost",
+              "displayName": "prompt_35_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_1",
+              "displayName": "prompt_35_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2",
+              "displayName": "prompt_35_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2r",
+              "displayName": "prompt_35_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4",
+              "displayName": "prompt_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_1",
+              "displayName": "prompt_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2",
+              "displayName": "prompt_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2r",
+              "displayName": "prompt_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_cost",
+              "displayName": "prompt_4_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_1",
+              "displayName": "prompt_4_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2",
+              "displayName": "prompt_4_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2r",
+              "displayName": "prompt_4_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_1",
+              "displayName": "input_token_count_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2",
+              "displayName": "input_token_count_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2r",
+              "displayName": "input_token_count_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "484ad24e-77aa-4499-baeb-8c59f2839189",
+      "name": "Airtable - GPT-4",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        660
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblplAUlOtauemrks",
+          "mode": "list",
+          "cachedResultName": "Cross Default",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "cd_file_name",
+              "displayName": "cd_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_issuer",
+              "displayName": "cd_issuer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_kira",
+              "displayName": "cd_kira",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_human",
+              "displayName": "cd_human",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35",
+              "displayName": "cd_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_1",
+              "displayName": "cd_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2",
+              "displayName": "cd_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2r",
+              "displayName": "cd_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4",
+              "displayName": "cd_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_1",
+              "displayName": "cd_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2",
+              "displayName": "cd_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2r",
+              "displayName": "cd_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35",
+              "displayName": "prompt_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_1",
+              "displayName": "prompt_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2",
+              "displayName": "prompt_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2r",
+              "displayName": "prompt_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_cost",
+              "displayName": "prompt_35_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_1",
+              "displayName": "prompt_35_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2",
+              "displayName": "prompt_35_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2r",
+              "displayName": "prompt_35_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4",
+              "displayName": "prompt_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_1",
+              "displayName": "prompt_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2",
+              "displayName": "prompt_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2r",
+              "displayName": "prompt_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_cost",
+              "displayName": "prompt_4_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_1",
+              "displayName": "prompt_4_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2",
+              "displayName": "prompt_4_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2r",
+              "displayName": "prompt_4_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_1",
+              "displayName": "input_token_count_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2",
+              "displayName": "input_token_count_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2r",
+              "displayName": "input_token_count_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e2271c2f-081e-4e10-85f7-2a12dd31eeca",
+      "name": "Airtable - Tokens",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        860,
+        860
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblplAUlOtauemrks",
+          "mode": "list",
+          "cachedResultName": "Cross Default",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+        },
+        "options": {
+          "fields": [
+            "cd_kira"
+          ]
+        }
+      },
+      "id": "d883d71f-a212-475a-976a-0f679568f512",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        60,
+        580
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "input_token_count_2r",
+              "value": "={{ $json.input_token_count }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1182e9e0-c31e-481f-ae6a-df1ecc2daca7",
+      "name": "Set - Tokens",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        660,
+        860
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-07T21:04:40.570Z",
+  "versionId": "ea19fc46-da8f-46de-adbc-770e9a910f4e"
+}
