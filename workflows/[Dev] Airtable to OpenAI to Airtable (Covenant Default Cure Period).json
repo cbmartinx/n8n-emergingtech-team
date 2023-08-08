@@ -169,7 +169,7 @@
             },
             {
               "role": "system",
-              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000"
+              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following:   Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs"
             }
           ]
         },
@@ -197,7 +197,7 @@
           "messages": [
             {
               "role": "system",
-              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000"
+              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following:   Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs"
             },
             {
               "content": "={{ $json.prompt }}"
@@ -232,7 +232,7 @@
             },
             {
               "name": "prompt",
-              "value": "=Q: What is the dollar amount cross-default threshold in the following reference text: \"{{ $json.cd_kira }}\""
+              "value": "=Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)):  \"{{ $json.cd_kira }}\""
             }
           ]
         },
@@ -272,11 +272,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}"
+              "name": "prompt_35",
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\n{{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2r",
+              "name": "cd_35",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -317,11 +317,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_2",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}"
+              "name": "prompt_4",
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\n{{ $json.prompt }}"
             },
             {
-              "name": "cd_4_2r",
+              "name": "cd_4",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -340,7 +340,7 @@
     {
       "parameters": {
         "operation": "countTokens",
-        "inputString": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}",
+        "inputString": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\n{{ $json.prompt }}",
         "destinationKey": "input_token_count"
       },
       "id": "180d282f-0702-43e2-8007-a802da210d1b",
@@ -364,10 +364,10 @@
         },
         "table": {
           "__rl": true,
-          "value": "tblplAUlOtauemrks",
+          "value": "tblOzwmWpHE6kzXA8",
           "mode": "list",
-          "cachedResultName": "Cross Default",
-          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+          "cachedResultName": "Covenant Default Cure Period",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblOzwmWpHE6kzXA8"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
@@ -383,8 +383,7 @@
               "defaultMatch": true,
               "display": true,
               "type": "string",
-              "readOnly": true,
-              "removed": false
+              "readOnly": true
             },
             {
               "id": "cd_file_name",
@@ -1579,10 +1578,10 @@
         },
         "table": {
           "__rl": true,
-          "value": "tblplAUlOtauemrks",
+          "value": "tblOzwmWpHE6kzXA8",
           "mode": "list",
-          "cachedResultName": "Cross Default",
-          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+          "cachedResultName": "Covenant Default Cure Period",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblOzwmWpHE6kzXA8"
         },
         "options": {
           "fields": [
@@ -1615,7 +1614,7 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "input_token_count_2r",
+              "name": "input_token_count",
               "value": "={{ $json.input_token_count }}"
             }
           ]
@@ -1639,6 +1638,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-07T21:04:40.570Z",
-  "versionId": "ea19fc46-da8f-46de-adbc-770e9a910f4e"
+  "updatedAt": "2023-08-08T15:33:46.489Z",
+  "versionId": "3396f694-18df-4377-8733-f9b0f33d693e"
 }
