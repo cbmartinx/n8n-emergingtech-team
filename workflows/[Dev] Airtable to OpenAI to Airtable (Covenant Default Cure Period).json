@@ -161,15 +161,11 @@
     {
       "parameters": {
         "resource": "chat",
-        "model": "gpt-4",
+        "model": "gpt-4-0613",
         "prompt": {
           "messages": [
             {
               "content": "={{ $json.prompt }}"
-            },
-            {
-              "role": "system",
-              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following:   Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs"
             }
           ]
         },
@@ -193,14 +189,11 @@
     {
       "parameters": {
         "resource": "chat",
+        "model": "gpt-3.5-turbo-0613",
         "prompt": {
           "messages": [
             {
-              "role": "system",
-              "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following:   Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs"
-            },
-            {
-              "content": "={{ $json.prompt }}\n\n"
+              "content": "={{ $json.prompt }}"
             }
           ]
         },
@@ -232,7 +225,7 @@
             },
             {
               "name": "prompt",
-              "value": "=Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)):  \"{{ $json.cd_kira }}\" A:"
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)) (and express it in a format such as “60 CDs” or “75 BDs”) to populate their knowledge management database.\nHere's an example: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\nQ: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): \"{{ $json.cd_kira }}\" \nA: "
             }
           ]
         },
@@ -272,11 +265,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\n{{ $json.prompt }}"
+              "name": "prompt_35_2",
+              "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35",
+              "name": "cd_35_2",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -317,11 +310,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\n{{ $json.prompt }}"
+              "name": "prompt_4_2",
+              "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4",
+              "name": "cd_4_2",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -340,7 +333,7 @@
     {
       "parameters": {
         "operation": "countTokens",
-        "inputString": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs\n{{ $json.prompt }}",
+        "inputString": "={{ $json.prompt }}",
         "destinationKey": "input_token_count"
       },
       "id": "180d282f-0702-43e2-8007-a802da210d1b",
@@ -1612,7 +1605,7 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "input_token_count",
+              "name": "input_token_count_2",
               "value": "={{ $json.input_token_count }}"
             }
           ]
@@ -1636,6 +1629,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-09T15:56:12.636Z",
-  "versionId": "2c9a970d-b2c6-4124-8a1f-11c3ede95825"
+  "updatedAt": "2023-08-09T20:42:29.607Z",
+  "versionId": "56b691db-160e-4007-b14d-2c810b0c9c47"
 }
