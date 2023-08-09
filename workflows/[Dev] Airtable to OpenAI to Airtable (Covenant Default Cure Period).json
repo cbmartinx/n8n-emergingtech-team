@@ -200,7 +200,7 @@
               "content": "You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following:   Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)): (g) failure by the Company to perform or observe any other covenant or agreement in the Notes or this Indenture and such failure continues for 60 days after receipt by the Company of written notice from the Trustee to the Company or from the Holders of at least 25% in principal amount of the Notes then outstanding to the Trustee and the Company (such written notice with respect to any default, a “Notice of Default”); A: 60 CDs"
             },
             {
-              "content": "={{ $json.prompt }}"
+              "content": "={{ $json.prompt }}\n\n"
             }
           ]
         },
@@ -232,7 +232,7 @@
             },
             {
               "name": "prompt",
-              "value": "=Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)):  \"{{ $json.cd_kira }}\""
+              "value": "=Q: In the following reference text, what is the period of time that the Issuer has to cure a default due to a covenant breach (distinguish between calendar days (CDs) and business days (BDs)):  \"{{ $json.cd_kira }}\" A:"
             }
           ]
         },
@@ -768,10 +768,10 @@
         },
         "table": {
           "__rl": true,
-          "value": "tblplAUlOtauemrks",
+          "value": "tblOzwmWpHE6kzXA8",
           "mode": "list",
-          "cachedResultName": "Cross Default",
-          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+          "cachedResultName": "Covenant Default Cure Period",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblOzwmWpHE6kzXA8"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
@@ -787,8 +787,7 @@
               "defaultMatch": true,
               "display": true,
               "type": "string",
-              "readOnly": true,
-              "removed": false
+              "readOnly": true
             },
             {
               "id": "cd_file_name",
@@ -1173,10 +1172,10 @@
         },
         "table": {
           "__rl": true,
-          "value": "tblplAUlOtauemrks",
+          "value": "tblOzwmWpHE6kzXA8",
           "mode": "list",
-          "cachedResultName": "Cross Default",
-          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblplAUlOtauemrks"
+          "cachedResultName": "Covenant Default Cure Period",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tblOzwmWpHE6kzXA8"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
@@ -1192,8 +1191,7 @@
               "defaultMatch": true,
               "display": true,
               "type": "string",
-              "readOnly": true,
-              "removed": false
+              "readOnly": true
             },
             {
               "id": "cd_file_name",
@@ -1638,6 +1636,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-08T15:33:46.489Z",
-  "versionId": "3396f694-18df-4377-8733-f9b0f33d693e"
+  "updatedAt": "2023-08-09T15:56:12.636Z",
+  "versionId": "2c9a970d-b2c6-4124-8a1f-11c3ede95825"
 }
