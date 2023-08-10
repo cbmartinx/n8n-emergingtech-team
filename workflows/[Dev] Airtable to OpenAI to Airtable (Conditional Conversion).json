@@ -1,0 +1,1634 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Merge - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Draft Prompt": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - GPT-3.5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OpenAI - GPT-4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge - GPT-4",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "GPT-Tokenizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Set - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Airtable - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Set - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Airtable - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-Tokenizer": {
+      "main": [
+        [
+          {
+            "node": "Set - Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Set - Draft Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Tokens": {
+      "main": [
+        [
+          {
+            "node": "Airtable - Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-10T16:26:31.869Z",
+  "id": "HsXj2ZC6BTrZflCA",
+  "name": "[Dev] Airtable to OpenAI to Airtable (Conditional Conversion)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c1a3e8b1-4fd8-4a09-ae79-93769304cf8d",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4-0613",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "47307230-c489-4bc6-af43-0acfbfec6c6d",
+      "name": "OpenAI - GPT-4",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        460,
+        660
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "j5vdhSbBHJIsVcNw",
+          "name": "[CM] [$] OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-3.5-turbo-0613",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fd4a0fc5-c844-45fb-a211-c0e8d46b4bac",
+      "name": "OpenAI - GPT-3.5",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "j5vdhSbBHJIsVcNw",
+          "name": "[CM] [$] OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt",
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. You are tasked with determining whether a provision is considered an \"Anytime\" Conversion (which means a holder of a Note can convert at any time prior to a date close to the Maturity Date), or a \"Conditional\" Conversion (which means a holder of a Note can only convert during certain dates if certain specified conditions are met (typically, conversion upon satisfaction of common stock sale price condition, conversion upon satisfaction of note trading price condition, conversion upon specified corporate events condition, conversion upon redemption condition, conversion during free convertibility period condition, or another condition)). Complete the following:\nQ:  Is the provision from the following reference text an \"Anytime\" Conversion or \"Conditional\" Conversion: Section 14.01 Conversion Privilege. Subject to and upon compliance with the provisions of this Article 14, each Holder of a Note shall have the right, at such Holder’s option, to convert all or any portion (if the portion to be converted is US$1,000 principal amount or an integral multiple thereof) of such Note at any time prior to the close of business on the fifth Scheduled Trading Day immediately preceding the Maturity Date,\nA: Anytime \nQ: Is the provision from the following reference text an \"Anytime\" Conversion or \"Conditional\" Conversion:. (a) Subject to and upon compliance with the provisions of this Article 14, each Holder of a Note shall have the right, at such Holder’s option, to convert all or any portion (if the portion to be converted is $1,000 principal amount or an integral multiple thereof) of such Note (i) subject to satisfaction of the conditions described in Section 14.01(b), at any time prior to the close of business on the Business Day immediately preceding January 1, 2027 under the circumstances and during the periods set forth in Section 14.01(b), and (ii) regardless of the conditions described in Section 14.01(b), on or after January 1, 2027 and prior to the close of business on the second Scheduled Trading Day immediately preceding the Maturity Date,\nA: Conditional\nQ: Is the provision from the following reference text an \"Anytime\" Conversion or \"Conditional\" Conversion: \"{{ $json.cd_kira }}\"\nA:"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d8b63680-9c55-4d8c-a865-88ebfef18c4b",
+      "name": "Set - Draft Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        240,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "f9361ae5-e223-4605-b6b1-99785bde461e",
+      "name": "Merge - GPT-3.5",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt_35_2",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "cd_35_2",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "59ad19a5-c177-4257-817e-add0a9cb4fcb",
+      "name": "Set - GPT-3.5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        860,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "66af9b94-3a95-4442-96ea-ac639f38d4ca",
+      "name": "Merge - GPT-4",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt_4_2",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "cd_4_2",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e15e0582-7ceb-4d9c-b88a-e078185eb131",
+      "name": "Set - GPT-4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        860,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "countTokens",
+        "inputString": "={{ $json.prompt }}",
+        "destinationKey": "input_token_count"
+      },
+      "id": "c5960e4c-a039-4cc7-95cf-d56b1659053e",
+      "name": "GPT-Tokenizer",
+      "type": "CUSTOM.gptTokenizer",
+      "typeVersion": 1,
+      "position": [
+        460,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl2chgjffBjIPR44",
+          "mode": "list",
+          "cachedResultName": "Conditional Conversion",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tbl2chgjffBjIPR44"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true
+            },
+            {
+              "id": "cd_file_name",
+              "displayName": "cd_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_issuer",
+              "displayName": "cd_issuer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_kira",
+              "displayName": "cd_kira",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_human",
+              "displayName": "cd_human",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35",
+              "displayName": "cd_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_1",
+              "displayName": "cd_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2",
+              "displayName": "cd_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2r",
+              "displayName": "cd_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4",
+              "displayName": "cd_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_1",
+              "displayName": "cd_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2",
+              "displayName": "cd_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2r",
+              "displayName": "cd_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35",
+              "displayName": "prompt_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_1",
+              "displayName": "prompt_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2",
+              "displayName": "prompt_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2r",
+              "displayName": "prompt_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_cost",
+              "displayName": "prompt_35_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_1",
+              "displayName": "prompt_35_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2",
+              "displayName": "prompt_35_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2r",
+              "displayName": "prompt_35_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4",
+              "displayName": "prompt_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_1",
+              "displayName": "prompt_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2",
+              "displayName": "prompt_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2r",
+              "displayName": "prompt_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_cost",
+              "displayName": "prompt_4_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_1",
+              "displayName": "prompt_4_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2",
+              "displayName": "prompt_4_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2r",
+              "displayName": "prompt_4_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_1",
+              "displayName": "input_token_count_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2",
+              "displayName": "input_token_count_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2r",
+              "displayName": "input_token_count_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "52765852-7133-4346-a596-e682616aa83c",
+      "name": "Airtable - GPT-3.5",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        460
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl2chgjffBjIPR44",
+          "mode": "list",
+          "cachedResultName": "Conditional Conversion",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tbl2chgjffBjIPR44"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true
+            },
+            {
+              "id": "cd_file_name",
+              "displayName": "cd_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_issuer",
+              "displayName": "cd_issuer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_kira",
+              "displayName": "cd_kira",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_human",
+              "displayName": "cd_human",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35",
+              "displayName": "cd_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_1",
+              "displayName": "cd_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2",
+              "displayName": "cd_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2r",
+              "displayName": "cd_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4",
+              "displayName": "cd_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_1",
+              "displayName": "cd_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2",
+              "displayName": "cd_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2r",
+              "displayName": "cd_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35",
+              "displayName": "prompt_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_1",
+              "displayName": "prompt_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2",
+              "displayName": "prompt_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2r",
+              "displayName": "prompt_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_cost",
+              "displayName": "prompt_35_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_1",
+              "displayName": "prompt_35_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2",
+              "displayName": "prompt_35_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2r",
+              "displayName": "prompt_35_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4",
+              "displayName": "prompt_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_1",
+              "displayName": "prompt_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2",
+              "displayName": "prompt_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2r",
+              "displayName": "prompt_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_cost",
+              "displayName": "prompt_4_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_1",
+              "displayName": "prompt_4_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2",
+              "displayName": "prompt_4_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2r",
+              "displayName": "prompt_4_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_1",
+              "displayName": "input_token_count_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2",
+              "displayName": "input_token_count_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2r",
+              "displayName": "input_token_count_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "69cd7fcc-5aca-4aea-bddf-297d9a4d6342",
+      "name": "Airtable - GPT-4",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        660
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl2chgjffBjIPR44",
+          "mode": "list",
+          "cachedResultName": "Conditional Conversion",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tbl2chgjffBjIPR44"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true
+            },
+            {
+              "id": "cd_file_name",
+              "displayName": "cd_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_issuer",
+              "displayName": "cd_issuer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_kira",
+              "displayName": "cd_kira",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_human",
+              "displayName": "cd_human",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35",
+              "displayName": "cd_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_1",
+              "displayName": "cd_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2",
+              "displayName": "cd_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_35_2r",
+              "displayName": "cd_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4",
+              "displayName": "cd_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_1",
+              "displayName": "cd_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2",
+              "displayName": "cd_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cd_4_2r",
+              "displayName": "cd_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35",
+              "displayName": "prompt_35",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_1",
+              "displayName": "prompt_35_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2",
+              "displayName": "prompt_35_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_2r",
+              "displayName": "prompt_35_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_35_cost",
+              "displayName": "prompt_35_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_1",
+              "displayName": "prompt_35_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2",
+              "displayName": "prompt_35_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_35_cost_2r",
+              "displayName": "prompt_35_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4",
+              "displayName": "prompt_4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_1",
+              "displayName": "prompt_4_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2",
+              "displayName": "prompt_4_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_2r",
+              "displayName": "prompt_4_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_4_cost",
+              "displayName": "prompt_4_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_1",
+              "displayName": "prompt_4_cost_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2",
+              "displayName": "prompt_4_cost_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_4_cost_2r",
+              "displayName": "prompt_4_cost_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_1",
+              "displayName": "input_token_count_1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2",
+              "displayName": "input_token_count_2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "input_token_count_2r",
+              "displayName": "input_token_count_2r",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e19118e7-5db5-4dbd-badd-f1d4a90be8d5",
+      "name": "Airtable - Tokens",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        860,
+        860
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appDcoagAhFsRorx3",
+          "mode": "list",
+          "cachedResultName": "LLM Test (August 2023) - GPT3.5 and GPT4 - Prompts v.1",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl2chgjffBjIPR44",
+          "mode": "list",
+          "cachedResultName": "Conditional Conversion",
+          "cachedResultUrl": "https://airtable.com/appDcoagAhFsRorx3/tbl2chgjffBjIPR44"
+        },
+        "options": {
+          "fields": [
+            "cd_kira"
+          ]
+        }
+      },
+      "id": "d2a96efb-e07a-49f2-90a2-0d8d02cead3f",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        60,
+        580
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "egXVJH86cIG8cive",
+          "name": "[CM] Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "input_token_count_2",
+              "value": "={{ $json.input_token_count }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c63ed10f-7753-46ee-8471-4dc8de20c650",
+      "name": "Set - Tokens",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        660,
+        860
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-10T21:00:12.356Z",
+  "versionId": "f5265741-ab1a-463d-a44a-dc3763c7f185"
+}
