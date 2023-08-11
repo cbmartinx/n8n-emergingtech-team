@@ -16,19 +16,14 @@
       "main": [
         [
           {
-            "node": "Get XML files",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Add links to JSON",
-            "type": "main",
-            "index": 1
-          },
-          {
             "node": "Get Index Page",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -59,7 +54,7 @@
       "main": [
         [
           {
-            "node": "Add Date & Time to JSON",
+            "node": "Set",
             "type": "main",
             "index": 0
           }
@@ -81,18 +76,7 @@
       "main": [
         [
           {
-            "node": "Add Date & Time to JSON",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Add Date & Time to JSON": {
-      "main": [
-        [
-          {
-            "node": "Set",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -103,7 +87,7 @@
       "main": [
         [
           {
-            "node": "De-Dupe",
+            "node": "Google Sheets",
             "type": "main",
             "index": 0
           }
@@ -125,9 +109,14 @@
       "main": [
         [
           {
-            "node": "Google Sheets",
+            "node": "Get XML files",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Add links to JSON",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -137,6 +126,17 @@
         [
           {
             "node": "Add links to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "De-Dupe",
             "type": "main",
             "index": 0
           }
@@ -273,23 +273,8 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
-      "id": "001fb898-e038-4864-84b4-f86fbdc78b9c",
-      "name": "Add Date & Time to JSON",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        -860,
-        800
-      ]
-    },
-    {
-      "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "// Extracting the date and time from the HTML content using regular expressions\nconst html = item.json.data;\n\n// Regular expressions to match the date and time patterns\nconst dateRegex = /Filing Date<\\/div>\\s+<div class=\"info\">(\\d{4}-\\d{2}-\\d{2})/;\nconst timeRegex = /Accepted<\\/div>\\s+<div class=\"info\">\\d{4}-\\d{2}-\\d{2} (\\d{2}:\\d{2}:\\d{2})/;\n\n// Extracting the date and time values using the regular expressions\nconst filingDateMatch = html.match(dateRegex);\nconst filingTimeMatch = html.match(timeRegex);\n\n// Check if the matches were found and extract the values\nconst filingDate = filingDateMatch ? filingDateMatch[1] : null;\nconst filingTime = filingTimeMatch ? filingTimeMatch[1] : null;\n\n// Create a new object with only the desired properties\nconst output = {\n  filing_date: filingDate,\n  filing_time: filingTime,\n};\n\nreturn output;\n"
+        "jsCode": "// Extracting the date and time from the HTML content using regular expressions\nconst html = item.json.data;\n\n// Regular expressions to match the date and time patterns\nconst dateRegex = /Filing Date<\\/div>\\s+<div class=\"info\">(\\d{4}-\\d{2}-\\d{2})/;\nconst timeRegex = /Accepted<\\/div>\\s+<div class=\"info\">\\d{4}-\\d{2}-\\d{2} (\\d{2}:\\d{2}:\\d{2})/;\n\n// Extracting the date and time values using the regular expressions\nconst filingDateMatch = html.match(dateRegex);\nconst filingTimeMatch = html.match(timeRegex);\n\n// Check if the matches were found and extract the values\nconst filingDate = filingDateMatch ? filingDateMatch[1] : null;\nconst filingTime = filingTimeMatch ? filingTimeMatch[1] : null;\n\nconst subjectCIKMatch = html.match(/<span class=\"companyName\">[^<]+\\(Subject\\)\\s*<acronym title=\"Central Index Key\">CIK<\\/acronym>: <a href=\"[^\"]*?CIK=(\\d+)/);\nconst reportingCIKMatch = html.match(/<span class=\"companyName\">[^<]+\\(<a href=\"\\/cgi-bin\\/own-disp\\?CIK=\\d+&amp;action=getowner\">Reporting<\\/a>\\)\\s*<acronym title=\"Central Index Key\">CIK<\\/acronym>: <a href=\"[^\"]*?CIK=(\\d+)/);\n\nconst reportingCIK = reportingCIKMatch ? reportingCIKMatch[1] : null;\nconst subjectCIK = subjectCIKMatch ? subjectCIKMatch[1] : null;\n\n// Create a new object with only the desired properties\nconst output = {\n  filing_date: filingDate,\n  filing_time: filingTime,\n  subject_CIK: subjectCIK,\n  reporting_CIK: reportingCIK,\n};\n\n\nreturn output;\n"
       },
       "id": "07d5df7a-0689-4812-84ae-43d22150c73b",
       "name": "Extract Date & Time",
@@ -524,7 +509,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        -260,
+        -660,
         800
       ],
       "credentials": {
@@ -624,7 +609,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        -660,
+        -860,
         800
       ]
     },
@@ -655,16 +640,16 @@
         "fieldsToCompare": {
           "fields": [
             {
-              "fieldName": "['issuer-cik']"
+              "fieldName": "reporting_CIK"
             },
             {
-              "fieldName": "['filer-cik']"
+              "fieldName": "subject_CIK"
             },
             {
-              "fieldName": "['filing-date']"
+              "fieldName": "filing_date"
             },
             {
-              "fieldName": "['filing-time']"
+              "fieldName": "filing_time"
             }
           ]
         },
@@ -675,8 +660,8 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 2.2,
       "position": [
-        -460,
-        800
+        -1060,
+        620
       ]
     },
     {
@@ -701,6 +686,21 @@
         -460,
         620
       ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "f8e194a2-76ba-4e05-9e51-e16e78806cb4",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -260,
+        620
+      ]
     }
   ],
   "pinData": {},
@@ -714,6 +714,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-04T15:25:46.100Z",
-  "versionId": "bfd1dc16-07ac-45a2-ac67-1c6e937cb2a8"
+  "updatedAt": "2023-08-11T17:56:37.433Z",
+  "versionId": "c765b174-699d-4d9b-a446-efb4cdc7d5b7"
 }
