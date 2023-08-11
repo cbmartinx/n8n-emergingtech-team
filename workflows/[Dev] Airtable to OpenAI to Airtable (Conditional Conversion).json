@@ -265,11 +265,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2r",
+              "name": "prompt_35_2",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2r",
+              "name": "cd_35_2",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1629,6 +1629,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-11T00:46:49.271Z",
-  "versionId": "59f818d9-11de-44fb-89ec-67e059a61379"
+  "updatedAt": "2023-08-11T16:21:00.111Z",
+  "versionId": "bf5b9111-101d-4bbc-9de6-e9ea0abbbcd2"
 }
