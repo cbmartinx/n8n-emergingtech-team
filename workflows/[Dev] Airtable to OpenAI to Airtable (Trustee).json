@@ -265,11 +265,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2",
+              "name": "prompt_35_2r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2",
+              "name": "cd_35_2r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -310,11 +310,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_2",
+              "name": "prompt_4_2r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4_2",
+              "name": "cd_4_2r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1605,7 +1605,7 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "input_token_count_2",
+              "name": "input_token_count_2r",
               "value": "={{ $json.input_token_count }}"
             }
           ]
@@ -1629,6 +1629,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-11T17:58:56.594Z",
-  "versionId": "19261b48-d388-4a33-a8ba-3deb166ea2f3"
+  "updatedAt": "2023-08-14T15:38:47.399Z",
+  "versionId": "b2cbb9c2-dcfe-4899-ad1c-6c765f7b121d"
 }
