@@ -225,7 +225,7 @@
             },
             {
               "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following: \nQ:  Should the following Trading Price Condition provision be categorized as “Yes, standard” or “Yes, non-standard”: (2) Prior to the Close of Business on the Business Day immediately preceding November 15, 2027, a Holder may surrender all or any portion of its Notes for exchange at any time during the five Business Day period after any five consecutive Trading Day period (the “Measurement Period”) in which the Trading Price per $1,000 principal amount of Notes, as determined following a request by a Holder in accordance with the procedures set forth in this subsection (b)(2), for each Trading Day of the Measurement Period was less than 98% of the product of (x) the Last Reported Sale Price of the Common Stock and (y) the applicable Exchange Rate on each such Trading Day.\nA: Yes, non-standard\nQ: Should the following Trading Price Condition provision be categorized as “Yes, standard” or “Yes, non-standard”. (i) Prior to the close of business on the Business Day immediately preceding February 1, 2026, a Holder may surrender all or any portion of its Notes for conversion at any time during the five consecutive Business Day period immediately after any ten consecutive Trading Day period (the “Measurement Period”) in which the Trading Price per $1,000 principal amount of Notes, as determined following a request by a Holder of Notes in accordance with this subsection (b)(i), for each Trading Day of the Measurement Period was less than 98% of the product of the Last Reported Sale Price of the Common Stock on each such Trading Day and the Conversion Rate on each such Trading Day.\nA: Yes, standard\nQ: Should the following Trading Price Condition provision be categorized as “Yes, standard” or “Yes, non-standard”. \"{{ $json.cd_kira }}\"\nA:"
+              "value": "=You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm categorize the following provision as either standard or not standard. The following tracks differences from this standard (in double asterisk are bolded terms which should be considered substantive) \"a Holder may surrender all or any portion of its Notes for conversion at any time during the **five Business Day** period immediately after any **ten consecutive Trading Day** period (the “Measurement Period”) in which the Trading Price per $1,000 principal amount of Notes [_] for each Trading Day of the Measurement Period was **less than 98%** of the product of the Last Reported Sale Price of the Common Stock and the Conversion Rate on each such Trading Day.\" \"Yes, non-standard\" indicates substantive differences from the above. Complete the following.\nQ:  Should the following Trading Price Condition provision be categorized as “Yes, standard” or “Yes, non-standard”: (2) Prior to the Close of Business on the Business Day immediately preceding November 15, 2027, a Holder may surrender all or any portion of its Notes for exchange at any time during the five Business Day period after any five consecutive Trading Day period (the “Measurement Period”) in which the Trading Price per $1,000 principal amount of Notes, as determined following a request by a Holder in accordance with the procedures set forth in this subsection (b)(2), for each Trading Day of the Measurement Period was less than 98% of the product of (x) the Last Reported Sale Price of the Common Stock and (y) the applicable Exchange Rate on each such Trading Day.\nA: Yes, non-standard\nQ: Should the following Trading Price Condition provision be categorized as “Yes, standard” or “Yes, non-standard”. (i) Prior to the close of business on the Business Day immediately preceding February 1, 2026, a Holder may surrender all or any portion of its Notes for conversion at any time during the five consecutive Business Day period immediately after any ten consecutive Trading Day period (the “Measurement Period”) in which the Trading Price per $1,000 principal amount of Notes, as determined following a request by a Holder of Notes in accordance with this subsection (b)(i), for each Trading Day of the Measurement Period was less than 98% of the product of the Last Reported Sale Price of the Common Stock on each such Trading Day and the Conversion Rate on each such Trading Day.\nA: Yes, standard\nQ: Should the following Trading Price Condition provision be categorized as “Yes, standard” or “Yes, non-standard”. \"{{ $json.cd_kira }}\"\nA:"
             }
           ]
         },
@@ -265,11 +265,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35",
+              "name": "prompt_35_2r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35",
+              "name": "cd_35_2r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -310,11 +310,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4",
+              "name": "prompt_4_2",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4",
+              "name": "cd_4_2",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1605,7 +1605,7 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "input_token_count",
+              "name": "input_token_count_2",
               "value": "={{ $json.input_token_count }}"
             }
           ]
@@ -1629,6 +1629,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-14T15:47:45.094Z",
-  "versionId": "4ade82e1-dc22-48d3-ae86-95a98a252efe"
+  "updatedAt": "2023-08-14T17:17:53.159Z",
+  "versionId": "ebd490ae-3819-4ddd-9625-03a4a3ea5be9"
 }
