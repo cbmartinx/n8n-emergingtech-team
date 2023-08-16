@@ -141,6 +141,11 @@
           }
         ]
       ]
+    },
+    "Anthropic": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2023-08-11T16:21:25.357Z",
@@ -236,7 +241,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        240,
+        260,
         580
       ]
     },
@@ -1620,6 +1625,59 @@
         660,
         860
       ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/complete",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "claude-2"
+            },
+            {
+              "name": "prompt",
+              "value": "\n\nHuman: You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. You are tasked with extracting the name of the Trustee (and only the name of the Trustee) to populate their knowledge management database. Complete the following: Q: What is the name of the trustee in the following reference text: AFFIRM HOLDINGS, INC. WILMINGTON TRUST, NATIONAL ASSOCIATION A: Wilmington Trust, National Association Q: What is the name of the trustee in the following reference text: \"FUBOTV INC. U.S. BANK NATIONAL ASSOCIATION\"\n\nAssistant: "
+            },
+            {
+              "name": "max_tokens_to_sample",
+              "value": 256
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e4d82a44-9887-4ddd-b593-62c1df879c0f",
+      "name": "Anthropic",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        460,
+        280
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TbNb5qZRIvoFGlnw",
+          "name": "[CM] [$] Anthropic"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1629,6 +1687,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-14T15:38:47.399Z",
-  "versionId": "b2cbb9c2-dcfe-4899-ad1c-6c765f7b121d"
+  "updatedAt": "2023-08-16T21:49:51.516Z",
+  "versionId": "10cf7765-5dc6-413b-b12f-7b08e1e39b1b"
 }
