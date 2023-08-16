@@ -705,7 +705,10 @@
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "os7je34NAk6vEHUU"
   },
   "staticData": {
     "node:Schedule Trigger": {
@@ -714,6 +717,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-11T17:56:37.433Z",
-  "versionId": "c765b174-699d-4d9b-a446-efb4cdc7d5b7"
+  "updatedAt": "2023-08-15T23:36:47.096Z",
+  "versionId": "b1186adf-06da-46bd-97d2-73cbf2fbdd45"
 }
