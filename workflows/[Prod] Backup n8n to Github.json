@@ -482,11 +482,14 @@
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "os7je34NAk6vEHUU"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-04T15:25:40.771Z",
-  "versionId": "8108f512-12ed-4da5-bf9c-e75697a0c68f"
+  "updatedAt": "2023-08-15T23:37:34.993Z",
+  "versionId": "460c6873-07d0-414a-a054-74ff214bfaf8"
 }
