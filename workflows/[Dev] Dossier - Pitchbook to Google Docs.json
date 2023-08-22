@@ -1,0 +1,552 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Provide Company Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Provide Company Name": {
+      "main": [
+        [
+          {
+            "node": "Search Pitchbook for ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Pitchbook for ID": {
+      "main": [
+        [
+          {
+            "node": "Create Bio URL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Industry URL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create News URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull Company Bio": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Bio URL": {
+      "main": [
+        [
+          {
+            "node": "Pull Company Bio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Industry URL": {
+      "main": [
+        [
+          {
+            "node": "Pull Company Industry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull Company Industry": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create News URL": {
+      "main": [
+        [
+          {
+            "node": "Pull Company News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull Company News": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-22T17:30:55.616Z",
+  "id": "ajgzQEwzN6tG1Mfw",
+  "name": "[Dev] Dossier - Pitchbook to Google Docs",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "20cc6d37-af82-4fe9-9dc5-618de12187a6",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        500,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "https://docs.google.com/document/d/15ukoEbdBFEWfwbAEfDwTrGMUW6l_sCilxU-lP41B4eE/edit",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{{company_description}}",
+              "replaceText": "={{ $json.description }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{company_name}}",
+              "replaceText": "={{ $json.companyName.legalName }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{company_sector}}",
+              "replaceText": "={{ $json.industries[0].industryCode.description }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{company_address}}",
+              "replaceText": "={{ $json[\"hqLocation\"][\"city\"] }}, {{ $json[\"hqLocation\"][\"stateProvince\"] }} {{ $json[\"hqLocation\"][\"postCode\"] }} {{ $json[\"hqLocation\"][\"country\"] }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{company_website}}",
+              "replaceText": "={{ $json.website }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{company_employees}}",
+              "replaceText": "={{ $json[\"employeeHistory\"][0][\"employeeCount\"] }} employees as of {{ $json[\"employeeHistory\"][0][\"asOfDate\"] }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{news_headline_1}}",
+              "replaceText": "={{ $json.title }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{news_body_1}}",
+              "replaceText": "=From {{ $json[\"source\"] }} on {{ $json[\"publishDate\"] }}: {{ $json[\"byline\"] }} Link here: {{ $json[\"url\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "e9022856-f264-4794-933a-7f3378089cf8",
+      "name": "Google Docs",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        1240
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "p5jPGrOYOZrZceua",
+          "name": "[CM] Google Docs (mar.fm)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "company-name",
+              "value": "Village Roadshow Entertainment Group"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4718b68e-283c-4522-afc6-af09d849dd21",
+      "name": "Provide Company Name",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        700,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api-v2.pitchbook.com/companies/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "companyNames",
+              "value": "={{ $json['company-name'] }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "*/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "35dbfd34-dee5-42b7-a3dd-fc6370c4c603",
+      "name": "Search Pitchbook for ID",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        900,
+        840
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QPbU6bw9yWPwyMmG",
+          "name": "[CM] [$] Pitchbook API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "*/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "13c4e8a5-a96d-4fab-8223-3276b63a85fe",
+      "name": "Pull Company Bio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        700,
+        1060
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QPbU6bw9yWPwyMmG",
+          "name": "[CM] [$] Pitchbook API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api-v2.pitchbook.com/sandbox-entities",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "entityType",
+              "value": "COMPANIES"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "*/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8e90b834-0904-4687-bbef-655de88a9397",
+      "name": "Get Sandbox Entities",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        460,
+        480
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QPbU6bw9yWPwyMmG",
+          "name": "[CM] [$] Pitchbook API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://api-v2.pitchbook.com/companies/{{ $json[\"items\"][0][\"companyId\"] }}/bio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "52aba2d9-1a2b-4a14-af5e-e2a0cd41fe6c",
+      "name": "Create Bio URL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://api-v2.pitchbook.com/companies/{{ $json[\"items\"][0][\"companyId\"] }}/industries"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3aeb3b8c-c415-4860-8fcc-bdd77c6c6047",
+      "name": "Create Industry URL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "*/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2be1336e-3a80-44be-bb05-c1c2aed3c845",
+      "name": "Pull Company Industry",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        700,
+        1200
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QPbU6bw9yWPwyMmG",
+          "name": "[CM] [$] Pitchbook API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "8b79e388-bc9a-4600-8c63-3e213882442a",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://api-v2.pitchbook.com/entities/{{ $json[\"items\"][0][\"companyId\"] }}/news?trailingRange=30\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d52e76a7-b9d4-4373-b413-0f3ff376f3fe",
+      "name": "Create News URL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "*/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3bf78f51-673b-4766-b64d-233720fca92d",
+      "name": "Pull Company News",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        700,
+        1340
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QPbU6bw9yWPwyMmG",
+          "name": "[CM] [$] Pitchbook API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "34ee549e-4769-4c25-bcbc-30bf643e72b4",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        1340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api-v2.pitchbook.com/calls/history",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "*/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "957696e1-9672-47f6-900b-1d1759d64839",
+      "name": "Get API Call History",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        660,
+        480
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QPbU6bw9yWPwyMmG",
+          "name": "[CM] [$] Pitchbook API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-22T17:49:48.321Z",
+  "versionId": "a128f9f0-7053-47c3-978b-13b03e06f542"
+}
