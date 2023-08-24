@@ -169,7 +169,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "temperature": 0
+        }
       },
       "id": "f7bcacb5-4ed3-48e1-9cf5-7f58cf1d127c",
       "name": "OpenAI - GPT-4",
@@ -197,7 +199,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "temperature": 0
+        }
       },
       "id": "696f6734-d675-438e-b05a-980e9528a5dc",
       "name": "OpenAI - GPT-3.5",
@@ -265,11 +269,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2r",
+              "name": "prompt_35_2(0temp)",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2r",
+              "name": "cd_35_2(0temp)",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -310,11 +314,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_2",
+              "name": "prompt_4_2(0temp)",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4_2",
+              "name": "cd_4_2(0temp)",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1629,6 +1633,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-14T17:17:53.159Z",
-  "versionId": "ebd490ae-3819-4ddd-9625-03a4a3ea5be9"
+  "updatedAt": "2023-08-24T20:35:25.646Z",
+  "versionId": "eb135590-6f18-455d-af2e-47d89fc6acf7"
 }
