@@ -50,7 +50,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -83,7 +83,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -202,8 +202,8 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        1100,
-        1240
+        1680,
+        860
       ],
       "credentials": {
         "googleDocsOAuth2Api": {
@@ -294,8 +294,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        700,
-        1060
+        1280,
+        1020
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -334,8 +334,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        460,
-        480
+        660,
+        500
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -363,7 +363,7 @@
       "typeVersion": 2,
       "position": [
         1100,
-        840
+        1020
       ]
     },
     {
@@ -385,7 +385,7 @@
       "typeVersion": 2,
       "position": [
         1100,
-        680
+        840
       ]
     },
     {
@@ -409,8 +409,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        700,
-        1200
+        1280,
+        840
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -430,8 +430,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        900,
-        1140
+        1500,
+        940
       ]
     },
     {
@@ -453,7 +453,7 @@
       "typeVersion": 2,
       "position": [
         1100,
-        520
+        660
       ]
     },
     {
@@ -477,8 +477,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        700,
-        1340
+        1280,
+        660
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -498,8 +498,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        900,
-        1340
+        1500,
+        780
       ]
     },
     {
@@ -529,8 +529,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        660,
-        480
+        880,
+        500
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -547,6 +547,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-22T17:49:48.321Z",
-  "versionId": "a128f9f0-7053-47c3-978b-13b03e06f542"
+  "updatedAt": "2023-08-24T18:16:33.456Z",
+  "versionId": "417e3ba3-1d95-4156-bdd9-9aaa8beaf419"
 }
