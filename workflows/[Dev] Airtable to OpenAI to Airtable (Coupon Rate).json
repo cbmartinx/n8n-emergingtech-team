@@ -222,7 +222,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "temperature": 1
+        }
       },
       "id": "cee6fa2c-e48e-4d99-933b-e5dfa95baba5",
       "name": "OpenAI - GPT-3.5",
@@ -484,6 +486,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-04T14:00:47.200Z",
-  "versionId": "59f4b9f3-cabe-43ca-893a-29ae78eb0a40"
+  "updatedAt": "2023-08-24T18:06:11.248Z",
+  "versionId": "6d446d11-56d8-4011-8e0c-98a2403080d8"
 }
