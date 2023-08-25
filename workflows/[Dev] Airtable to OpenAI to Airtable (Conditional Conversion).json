@@ -269,11 +269,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2(0temp)",
+              "name": "prompt_35_2(0temp)r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2(0temp)",
+              "name": "cd_35_2(0temp)r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -314,11 +314,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_2(0temp)",
+              "name": "prompt_4_2(0temp)r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4_2(0temp)",
+              "name": "cd_4_2(0temp)r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1633,6 +1633,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-24T20:06:08.369Z",
-  "versionId": "54fae551-6475-472d-9635-369a777b4ab8"
+  "updatedAt": "2023-08-25T19:22:45.767Z",
+  "versionId": "6f6a6502-17a7-4176-9850-db66db09b606"
 }
