@@ -277,11 +277,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2(0temp)",
+              "name": "prompt_35_2(0temp)r",
               "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2(0temp)",
+              "name": "cd_35_2(0temp)r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -322,11 +322,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_2(0temp)",
+              "name": "prompt_4_2(0temp)r",
               "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the dollar amount cross-default threshold (and only the dollar amount) to populate their knowledge management database. Here's an example:  Q: What is the dollar amount cross-default threshold in the following reference text: \"(g) default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) in the aggregate of the Company and/or any such Significant Subsidiary, whether such indebtedness now exists or shall hereafter be created (i) resulting in such indebtedness becoming or being declared due and payable prior to its stated maturity date or (ii) constituting a failure to pay the principal of any such debt when due and payable (after the expiration of all applicable grace periods) at its stated maturity, upon required repurchase, upon declaration of acceleration or otherwise, and in the cases of clauses (i) and (ii), such acceleration shall not have been rescinded or annulled, such failure to pay or default shall not have been cured or waived, or such indebtedness shall not have been paid or discharged, as the case may be, within 30 days after written notice to the Company by the Trustee or to the Company and the Trustee by Holders of at least 25% in aggregate principal amount of Notes then outstanding in accordance with this Indenture;\" A: $55,000,000\n{{ $json.prompt }}"
             },
             {
-              "name": "cd_4_2(0temp)",
+              "name": "cd_4_2(0temp)r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1644,6 +1644,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-24T18:35:51.453Z",
-  "versionId": "8088af12-d38b-4fd1-b6f8-204baea66402"
+  "updatedAt": "2023-08-25T19:02:54.770Z",
+  "versionId": "c3f6eca5-2dee-4553-aa0a-5bc834db4de6"
 }
