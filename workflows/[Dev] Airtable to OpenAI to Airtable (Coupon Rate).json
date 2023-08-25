@@ -187,7 +187,7 @@
     {
       "parameters": {
         "resource": "chat",
-        "model": "gpt-4",
+        "model": "gpt-4-0613",
         "prompt": {
           "messages": [
             {
@@ -195,7 +195,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "temperature": 0
+        }
       },
       "id": "c8a5747d-9a70-4e36-b65f-3d47fb4beb62",
       "name": "OpenAI - GPT-4",
@@ -215,6 +217,7 @@
     {
       "parameters": {
         "resource": "chat",
+        "model": "gpt-3.5-turbo-0613",
         "prompt": {
           "messages": [
             {
@@ -223,7 +226,7 @@
           ]
         },
         "options": {
-          "temperature": 1
+          "temperature": 0
         }
       },
       "id": "cee6fa2c-e48e-4d99-933b-e5dfa95baba5",
@@ -252,7 +255,7 @@
             },
             {
               "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. Complete the following:\n\nQ:  What is the interest rate in the following reference text: This Note shall bear cash interest at the rate of 3.50% per year from March 17, 2021, or from the most recent date to which interest had been paid or provided for to, but excluding, the next scheduled Interest Payment Date until April 15, 2026.\nA: 3.50%\nQ: What is the interest rate in the following reference text: \"{{ $json.fields['Coupon Rate (Kira)'] }}\"\nA: "
+              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. This information will be stored in a database so you will limit your responses to the answer itself (i.e., no introductory or explanatory text in addition to the answer). You will be provided with a provision from a publicly filed convertible bond indenture. Your task is to help the knowledge management team at a large international law firm extract the interest rate (and only the interest rate) to populate their knowledge management database. Here's an example:|Q:  What is the interest rate in the following reference text: This Note shall bear cash interest at the rate of 3.50% per year from March 17, 2021, or from the most recent date to which interest had been paid or provided for to, but excluding, the next scheduled Interest Payment Date until April 15, 2026.A: 3.50%\n\nQ. What is the interest rate in the following reference text: \"{{ $json.fields['Coupon Rate (Kira)'] }}\"\nA: "
             }
           ]
         },
@@ -292,11 +295,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35",
+              "name": "prompt_35_2(0temp)r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "rate_35",
+              "name": "rate_35_2(0temp)r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -371,11 +374,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4",
+              "name": "prompt_4_2(0temp)r",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "rate_4",
+              "name": "rate_4_2(0temp)r",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -486,6 +489,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-24T18:06:11.248Z",
-  "versionId": "6d446d11-56d8-4011-8e0c-98a2403080d8"
+  "updatedAt": "2023-08-25T18:31:45.373Z",
+  "versionId": "2e7e621b-1a06-4e07-b82c-8fe66a2dcbc8"
 }
