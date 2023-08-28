@@ -1,0 +1,593 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Merge - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Draft Prompt": {
+      "main": [
+        [
+          {
+            "node": "GPT-Tokenizer",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set - GPT-3.5": {
+      "main": [
+        []
+      ]
+    },
+    "Merge - GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Set - GPT-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - GPT-4": {
+      "main": [
+        []
+      ]
+    },
+    "GPT-Tokenizer": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Tokens": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Set - Draft Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Set - Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Set - GPT-3.5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-28T20:09:38.708Z",
+  "id": "KDPlZnDoGpnQ9qQS",
+  "name": "[Dev] OpenAI to Google Sheets (Time Entry Task Codes)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "cdf51c56-220d-469c-8a85-adecdd65fe94",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4-0613",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "5d293d2a-7ff3-408b-b445-f4f02795284e",
+      "name": "OpenAI - GPT-4",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        900,
+        660
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "j5vdhSbBHJIsVcNw",
+          "name": "[CM] [$] OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-3.5-turbo-16k-0613",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "86d51d62-168b-41e7-a2a1-88677ca04c02",
+      "name": "OpenAI - GPT-3.5",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        880,
+        200
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "j5vdhSbBHJIsVcNw",
+          "name": "[CM] [$] OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "row_number",
+              "value": "={{ $json['No.'] }}"
+            },
+            {
+              "name": "prompt",
+              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of the following nine task codes applies to each given time entry (they are provided in the order they usually occur throughout a transaction):\n\n1. Preliminary deal process\n2. Deal structuring and strategy (incl tax & board counsel)\n3. Due diligence\n4. Primary transaction documentation/definitive agreements\n5. Equity documentation\n6. Ancillary agreements (including carveouts & transitions)\n7. Deal management\n8. Regulatory issues (other than antitrust)\n9. Closing\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. Categorize the following:\n\nTime entry: \"Attend to email correspondence; review revised purchase agreement and comments thereto\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"Time Entry\"] }}\"\nTask code: "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cadb2065-6bee-4221-b103-5cad4d58f3b9",
+      "name": "Set - Draft Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        660,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt_35_2(0temp)r",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "cd_35_2(0temp)r",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "21bcac3d-5070-43fa-80c5-6c7ad44b00b5",
+      "name": "Set - GPT-3.5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "8ac38cb9-9e56-4198-b6cc-a82a12246d33",
+      "name": "Merge - GPT-4",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1100,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "prompt_4_2(0temp)r",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "cd_4_2(0temp)r",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6e371879-5106-4b56-ae7b-cc2ef53ea6e6",
+      "name": "Set - GPT-4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "countTokens",
+        "inputString": "={{ $json.prompt }}",
+        "destinationKey": "input_token_count"
+      },
+      "id": "c14ad165-8095-4f34-a4c0-2d31e4cd9941",
+      "name": "GPT-Tokenizer",
+      "type": "CUSTOM.gptTokenizer",
+      "typeVersion": 1,
+      "position": [
+        900,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "row_number",
+              "value": "={{ $json.row_number }}"
+            },
+            {
+              "name": "input_token_count",
+              "value": "={{ $json.input_token_count }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1ebb34ba-ee2d-4aa4-bf20-45f0cb0013c8",
+      "name": "Set - Tokens",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI",
+          "mode": "list",
+          "cachedResultName": "Time Entries --> Task Codes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "64780bae-9487-4ef7-9b73-fe5d4a0e6aad",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        460,
+        660
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lMnR0Oj2mNgH09Mh",
+          "name": "[CM] Google Sheets (mar.fm)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI",
+          "mode": "list",
+          "cachedResultName": "Time Entries --> Task Codes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Time Entry",
+              "displayName": "Time Entry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tc_gpt35",
+              "displayName": "tc_gpt35",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cost_gpt35",
+              "displayName": "cost_gpt35",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tc_gpt4",
+              "displayName": "tc_gpt4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cost_gpt4",
+              "displayName": "cost_gpt4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0ba8a1b3-e941-42de-8d25-6c9808f5ec79",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1500,
+        860
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lMnR0Oj2mNgH09Mh",
+          "name": "[CM] Google Sheets (mar.fm)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "f6bd61d8-a7d9-416e-bdfd-723bb26d59c0",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1100,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 50,
+        "options": {}
+      },
+      "id": "a25267b8-76ce-4948-8261-9ffc30bffc72",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        680,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      },
+      "id": "38618427-a528-4136-aa70-4bc6a76526c8",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        680,
+        360
+      ],
+      "webhookId": "8181ee0a-3451-47fa-9ed6-c725aa9a178c"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "797c141a-2d52-4cf0-9351-fd85f6ca552a",
+      "name": "Merge - GPT-3.5",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1100,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-28T21:28:59.876Z",
+  "versionId": "1198b6aa-3bb5-4a9a-b6d0-b07678cdcdc3"
+}
