@@ -23,28 +23,6 @@
         ]
       ]
     },
-    "OpenAI - GPT-4": {
-      "main": [
-        [
-          {
-            "node": "Merge - GPT-4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge - GPT-4": {
-      "main": [
-        [
-          {
-            "node": "Set - GPT-4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "GPT-Tokenizer": {
       "main": [
         [
@@ -122,7 +100,7 @@
       "main": [
         [
           {
-            "node": "Merge1",
+            "node": "Set - GPT-3.5",
             "type": "main",
             "index": 0
           }
@@ -141,21 +119,17 @@
             "node": "Split In Batches",
             "type": "main",
             "index": 0
-          },
+          }
+        ]
+      ]
+    },
+    "Set - GPT-3.5": {
+      "main": [
+        [
           {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          },
-          {
-            "node": "GPT-Tokenizer",
+            "node": "Google Sheets2",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Merge1",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -187,36 +161,6 @@
             }
           ]
         },
-        "options": {
-          "temperature": 0
-        }
-      },
-      "id": "5d293d2a-7ff3-408b-b445-f4f02795284e",
-      "name": "OpenAI - GPT-4",
-      "type": "n8n-nodes-base.openAi",
-      "typeVersion": 1,
-      "position": [
-        900,
-        660
-      ],
-      "credentials": {
-        "openAiApi": {
-          "id": "j5vdhSbBHJIsVcNw",
-          "name": "[CM] [$] OpenAI"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "chat",
-        "model": "gpt-3.5-turbo-16k-0613",
-        "prompt": {
-          "messages": [
-            {
-              "content": "={{ $json.prompt }}"
-            }
-          ]
-        },
         "options": {}
       },
       "id": "86d51d62-168b-41e7-a2a1-88677ca04c02",
@@ -224,7 +168,7 @@
       "type": "n8n-nodes-base.openAi",
       "typeVersion": 1,
       "position": [
-        880,
+        900,
         200
       ],
       "credentials": {
@@ -240,16 +184,12 @@
         "values": {
           "string": [
             {
-              "name": "id",
-              "value": "={{ $json.id }}"
-            },
-            {
-              "name": "prompt_35_2(0temp)r",
-              "value": "={{ $json.prompt }}"
-            },
-            {
-              "name": "cd_35_2(0temp)r",
+              "name": "tc_gpt4",
               "value": "={{ $json.message.content }}"
+            },
+            {
+              "name": "row_number",
+              "value": "={{ $json.row_number }}"
             }
           ]
         },
@@ -260,53 +200,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1520,
-        460
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
-      "id": "8ac38cb9-9e56-4198-b6cc-a82a12246d33",
-      "name": "Merge - GPT-4",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        1100,
-        660
-      ]
-    },
-    {
-      "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
-              "name": "id",
-              "value": "={{ $json.id }}"
-            },
-            {
-              "name": "prompt_4_2(0temp)r",
-              "value": "={{ $json.prompt }}"
-            },
-            {
-              "name": "cd_4_2(0temp)r",
-              "value": "={{ $json.message.content }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "6e371879-5106-4b56-ae7b-cc2ef53ea6e6",
-      "name": "Set - GPT-4",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
         1300,
-        660
+        460
       ]
     },
     {
@@ -507,7 +402,7 @@
     },
     {
       "parameters": {
-        "batchSize": 50,
+        "batchSize": 250,
         "options": {}
       },
       "id": "a25267b8-76ce-4948-8261-9ffc30bffc72",
@@ -515,13 +410,13 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 2,
       "position": [
-        680,
+        660,
         200
       ]
     },
     {
       "parameters": {
-        "amount": 5,
+        "amount": 10,
         "unit": "seconds"
       },
       "id": "38618427-a528-4136-aa70-4bc6a76526c8",
@@ -529,8 +424,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
       "position": [
-        680,
-        360
+        660,
+        420
       ],
       "webhookId": "8181ee0a-3451-47fa-9ed6-c725aa9a178c"
     },
@@ -551,31 +446,16 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
-      "id": "635a3dba-8545-43b7-91a5-b72d8fbcab7b",
-      "name": "Merge1",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        1300,
-        460
-      ]
-    },
-    {
-      "parameters": {
         "keepOnlySet": true,
         "values": {
           "string": [
             {
               "name": "row_number",
-              "value": "={{ $json['No.'] }}"
+              "value": "={{ $json.row_number }}"
             },
             {
               "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of the following nine task codes applies to each given time entry (they are provided in the order they usually occur throughout a transaction):\n\n1. Preliminary deal process\n2. Deal structuring and strategy (incl tax & board counsel)\n3. Due diligence\n4. Primary transaction documentation/definitive agreements\n5. Equity documentation\n6. Ancillary agreements (including carveouts & transitions)\n7. Deal management\n8. Regulatory issues (other than antitrust)\n9. Closing\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. Categorize the following:\n\nTime entry: \"Attend to email correspondence; review revised purchase agreement and comments thereto\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"Time Entry\"] }}\"\nTask code: "
+              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of the following nine task codes applies to each given time entry (they are provided in the order they usually occur throughout a transaction):\n\n1. Preliminary deal process\n2. Deal structuring and strategy (incl tax & board counsel)\n3. Due diligence\n4. Primary transaction documentation/definitive agreements\n5. Equity documentation\n6. Ancillary agreements (including carveouts & transitions)\n7. Deal management\n8. Regulatory issues (other than antitrust)\n9. Closing\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. Categorize the following:\n\nTime entry: \"Attend to email correspondence; review revised purchase agreement and comments thereto\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"time_entry\"] }}\"\nTask code: "
             }
           ]
         },
@@ -589,6 +469,113 @@
         660,
         660
       ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI",
+          "mode": "list",
+          "cachedResultName": "Time Entries --> Task Codes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Time Entry",
+              "displayName": "Time Entry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tc_gpt35",
+              "displayName": "tc_gpt35",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cost_gpt35",
+              "displayName": "cost_gpt35",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tc_gpt4",
+              "displayName": "tc_gpt4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cost_gpt4",
+              "displayName": "cost_gpt4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_token_count",
+              "displayName": "input_token_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b5655ace-0d70-4825-8fee-d6f2ca3bc0e0",
+      "name": "Google Sheets2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1500,
+        460
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lMnR0Oj2mNgH09Mh",
+          "name": "[CM] Google Sheets (mar.fm)"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -598,6 +585,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-28T22:04:33.854Z",
-  "versionId": "c3bf6c04-ffa4-4142-8f44-6868c60455e8"
+  "updatedAt": "2023-08-29T15:45:36.562Z",
+  "versionId": "650ed7d1-eafe-41e0-acc0-be2248dabe7d"
 }
