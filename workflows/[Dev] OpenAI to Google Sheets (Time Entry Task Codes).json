@@ -34,37 +34,6 @@
         ]
       ]
     },
-    "Set - Draft Prompt": {
-      "main": [
-        [
-          {
-            "node": "GPT-Tokenizer",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          },
-          {
-            "node": "Split In Batches",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Merge - GPT-3.5",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Set - GPT-3.5": {
-      "main": [
-        []
-      ]
-    },
     "Merge - GPT-4": {
       "main": [
         [
@@ -74,11 +43,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Set - GPT-4": {
-      "main": [
-        []
       ]
     },
     "GPT-Tokenizer": {
@@ -158,9 +122,40 @@
       "main": [
         [
           {
-            "node": "Set - GPT-3.5",
+            "node": "Merge1",
             "type": "main",
             "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - Draft Prompt": {
+      "main": [
+        [
+          {
+            "node": "Merge - GPT-3.5",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "GPT-Tokenizer",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -245,32 +240,6 @@
         "values": {
           "string": [
             {
-              "name": "row_number",
-              "value": "={{ $json['No.'] }}"
-            },
-            {
-              "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of the following nine task codes applies to each given time entry (they are provided in the order they usually occur throughout a transaction):\n\n1. Preliminary deal process\n2. Deal structuring and strategy (incl tax & board counsel)\n3. Due diligence\n4. Primary transaction documentation/definitive agreements\n5. Equity documentation\n6. Ancillary agreements (including carveouts & transitions)\n7. Deal management\n8. Regulatory issues (other than antitrust)\n9. Closing\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. Categorize the following:\n\nTime entry: \"Attend to email correspondence; review revised purchase agreement and comments thereto\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"Time Entry\"] }}\"\nTask code: "
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "cadb2065-6bee-4221-b103-5cad4d58f3b9",
-      "name": "Set - Draft Prompt",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
-        660,
-        660
-      ]
-    },
-    {
-      "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
               "name": "id",
               "value": "={{ $json.id }}"
             },
@@ -291,7 +260,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1300,
+        1520,
         460
       ]
     },
@@ -579,6 +548,47 @@
         1100,
         460
       ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "635a3dba-8545-43b7-91a5-b72d8fbcab7b",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "row_number",
+              "value": "={{ $json['No.'] }}"
+            },
+            {
+              "name": "prompt",
+              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of the following nine task codes applies to each given time entry (they are provided in the order they usually occur throughout a transaction):\n\n1. Preliminary deal process\n2. Deal structuring and strategy (incl tax & board counsel)\n3. Due diligence\n4. Primary transaction documentation/definitive agreements\n5. Equity documentation\n6. Ancillary agreements (including carveouts & transitions)\n7. Deal management\n8. Regulatory issues (other than antitrust)\n9. Closing\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. Categorize the following:\n\nTime entry: \"Attend to email correspondence; review revised purchase agreement and comments thereto\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"Time Entry\"] }}\"\nTask code: "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9fab9b23-b5dd-4927-9fa1-d4e3280082f3",
+      "name": "Set - Draft Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        660,
+        660
+      ]
     }
   ],
   "pinData": {},
@@ -588,6 +598,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-28T21:28:59.876Z",
-  "versionId": "1198b6aa-3bb5-4a9a-b6d0-b07678cdcdc3"
+  "updatedAt": "2023-08-28T22:04:33.854Z",
+  "versionId": "c3bf6c04-ffa4-4142-8f44-6868c60455e8"
 }
