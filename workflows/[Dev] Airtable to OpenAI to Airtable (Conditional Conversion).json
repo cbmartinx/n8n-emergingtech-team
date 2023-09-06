@@ -229,7 +229,7 @@
             },
             {
               "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in distilling information from legal agreements into key points. You are tasked with determining whether a provision is considered an \"Anytime\" Conversion (which means a holder of a Note can convert at any time prior to a date close to the Maturity Date), or a \"Conditional\" Conversion (which means a holder of a Note can only convert during certain dates if certain specified conditions are met (typically, conversion upon satisfaction of common stock sale price condition, conversion upon satisfaction of note trading price condition, conversion upon specified corporate events condition, conversion upon redemption condition, conversion during free convertibility period condition, or another condition)). Complete the following:\nQ:  Is the provision from the following reference text an \"Anytime\" Conversion or \"Conditional\" Conversion: Section 14.01 Conversion Privilege. Subject to and upon compliance with the provisions of this Article 14, each Holder of a Note shall have the right, at such Holder’s option, to convert all or any portion (if the portion to be converted is US$1,000 principal amount or an integral multiple thereof) of such Note at any time prior to the close of business on the fifth Scheduled Trading Day immediately preceding the Maturity Date,\nA: Anytime \nQ: Is the provision from the following reference text an \"Anytime\" Conversion or \"Conditional\" Conversion:. (a) Subject to and upon compliance with the provisions of this Article 14, each Holder of a Note shall have the right, at such Holder’s option, to convert all or any portion (if the portion to be converted is $1,000 principal amount or an integral multiple thereof) of such Note (i) subject to satisfaction of the conditions described in Section 14.01(b), at any time prior to the close of business on the Business Day immediately preceding January 1, 2027 under the circumstances and during the periods set forth in Section 14.01(b), and (ii) regardless of the conditions described in Section 14.01(b), on or after January 1, 2027 and prior to the close of business on the second Scheduled Trading Day immediately preceding the Maturity Date,\nA: Conditional\nQ: Is the provision from the following reference text an \"Anytime\" Conversion or \"Conditional\" Conversion: \"{{ $json.cd_kira }}\"\nA:"
+              "value": "=Your task is to summarize text as either ```Conditional``` or ```Anytime```. Complete the following.\nQ: This allows a holder to convert at any time prior to a certain date, unless the securities have been redeemed or repurchased. Therefore, it’s an “Anytime” Conversion.\nA: Anytime\nQ: This allows a holder to convert at any time and in any amount that is an authorized denomination, and also specifies a free convertibility period after a certain date. Therefore, it’s a “Conditional Conversion”.\nA: Conditional\nQ: \"{{ $json.cd_4_4shotCoT }}\"\nA:"
             }
           ]
         },
@@ -314,11 +314,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_2(0temp)r",
+              "name": "prompt_4_4shotCoT",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4_2(0temp)r",
+              "name": "cd_4_4shotCoT",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1580,7 +1580,7 @@
         },
         "options": {
           "fields": [
-            "cd_kira"
+            "cd_4_4shotCoT"
           ]
         }
       },
@@ -1633,6 +1633,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-30T15:27:40.459Z",
-  "versionId": "88f538ac-b1e4-4d5c-8a78-27df1b86ae5a"
+  "updatedAt": "2023-09-06T20:34:43.898Z",
+  "versionId": "1e4c321f-efe6-46a4-b53e-07e0b922f2ef"
 }
