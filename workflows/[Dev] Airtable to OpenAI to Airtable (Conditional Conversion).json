@@ -269,11 +269,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_35_2(0temp)r",
+              "name": "prompt_3_4shotCoTFormat",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_35_2(0temp)r",
+              "name": "cd_3_4shotCoTFormat",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1633,6 +1633,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-06T20:34:43.898Z",
-  "versionId": "1e4c321f-efe6-46a4-b53e-07e0b922f2ef"
+  "updatedAt": "2023-09-07T19:30:28.212Z",
+  "versionId": "bd1ef858-4cdc-463b-8846-41caa9af337a"
 }
