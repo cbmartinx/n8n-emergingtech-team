@@ -233,7 +233,7 @@
             },
             {
               "name": "prompt",
-              "value": "=See below instructions. Your output should be ```print(formatted_amount)``` and nothing more.\nStep 1: Find the amount from the reference text. amount = the number which conveys the dollar amount cross-default threshold from the above provision.\nStep 2: Format the amount as follows: formatted_amount = \"${:,.0f}\".format(amount)\nStep 3: Output the following format. print(formatted_amount)\nComplete the following\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) \nA: $55,000,000\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $60 million (or its foreign currency equivalent) \nA: $60,000,000\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $100,000,000.00 (or its foreign currency equivalent) \nA: $100,000,000\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of US$25,000,000 (or the foreign currency equivalent thereof)\nA: $25,000,000\nQ: Reference text: \"{{ $json.cd_kira }}\"\nA: "
+              "value": "=Complete the following\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $55,000,000 (or its foreign currency equivalent) \nA: $55,000,000\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $60 million (or its foreign currency equivalent) \nA: $60,000,000\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of $100,000,000.00 (or its foreign currency equivalent) \nA: $100,000,000\nQ: Reference text: default by the Company or any Significant Subsidiary of the Company with respect to any mortgage, agreement or other instrument under which there may be outstanding, or by which there may be secured or evidenced, any indebtedness for money borrowed in excess of US$25,000,000 (or the foreign currency equivalent thereof)\nA: $25,000,000\nQ: Reference text: \"{{ $json.cd_kira }}\"\nA: "
             }
           ]
         },
@@ -318,11 +318,11 @@
               "value": "={{ $json.id }}"
             },
             {
-              "name": "prompt_4_3CoTFunctionalCall",
+              "name": "prompt_4_4Shot",
               "value": "={{ $json.prompt }}"
             },
             {
-              "name": "cd_4_3CoTFunctionalCall",
+              "name": "cd_4_4Shot",
               "value": "={{ $json.message.content }}"
             }
           ]
@@ -1640,6 +1640,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-07T20:36:44.471Z",
-  "versionId": "a28b7d9a-c925-43d2-829e-0dd79288d7ab"
+  "updatedAt": "2023-09-12T19:14:09.067Z",
+  "versionId": "3552edfa-298d-46a8-ae57-42fdf1c686bb"
 }
