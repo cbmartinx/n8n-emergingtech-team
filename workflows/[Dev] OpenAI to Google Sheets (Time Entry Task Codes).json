@@ -23,28 +23,6 @@
         ]
       ]
     },
-    "GPT-Tokenizer": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set - Tokens": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Sheets": {
       "main": [
         [
@@ -56,11 +34,27 @@
         ]
       ]
     },
-    "Merge": {
+    "Set - Draft Prompt": {
       "main": [
         [
           {
-            "node": "Set - Tokens",
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set - GPT-3.5": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
             "type": "main",
             "index": 0
           }
@@ -78,7 +72,7 @@
         ],
         [
           {
-            "node": "Merge - GPT-3.5",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -96,38 +90,11 @@
         ]
       ]
     },
-    "Merge - GPT-3.5": {
+    "Merge": {
       "main": [
         [
           {
             "node": "Set - GPT-3.5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set - Draft Prompt": {
-      "main": [
-        [
-          {
-            "node": "Merge - GPT-3.5",
-            "type": "main",
-            "index": 1
-          },
-          {
-            "node": "Split In Batches",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set - GPT-3.5": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets2",
             "type": "main",
             "index": 0
           }
@@ -146,14 +113,13 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        260,
-        660
+        -20,
+        460
       ]
     },
     {
       "parameters": {
         "resource": "chat",
-        "model": "gpt-4-0613",
         "prompt": {
           "messages": [
             {
@@ -161,6 +127,7 @@
             }
           ]
         },
+        "simplifyOutput": false,
         "options": {}
       },
       "id": "86d51d62-168b-41e7-a2a1-88677ca04c02",
@@ -168,9 +135,10 @@
       "type": "n8n-nodes-base.openAi",
       "typeVersion": 1,
       "position": [
-        900,
-        200
+        780,
+        260
       ],
+      "retryOnFail": true,
       "credentials": {
         "openAiApi": {
           "id": "j5vdhSbBHJIsVcNw",
@@ -184,7 +152,7 @@
         "values": {
           "string": [
             {
-              "name": "tc_gpt4",
+              "name": "tc_gpt35",
               "value": "={{ $json.message.content }}"
             },
             {
@@ -200,66 +168,25 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1300,
+        780,
         460
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "countTokens",
-        "inputString": "={{ $json.prompt }}",
-        "destinationKey": "input_token_count"
-      },
-      "id": "c14ad165-8095-4f34-a4c0-2d31e4cd9941",
-      "name": "GPT-Tokenizer",
-      "type": "CUSTOM.gptTokenizer",
-      "typeVersion": 1,
-      "position": [
-        900,
-        860
-      ]
-    },
-    {
-      "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
-              "name": "row_number",
-              "value": "={{ $json.row_number }}"
-            },
-            {
-              "name": "input_token_count",
-              "value": "={{ $json.input_token_count }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "1ebb34ba-ee2d-4aa4-bf20-45f0cb0013c8",
-      "name": "Set - Tokens",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
-        1300,
-        860
       ]
     },
     {
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI",
+          "value": "1Fcov_H6Pf2iEWdtJUO5VwK_E1CtXCyRmFIGqx42ErXk",
           "mode": "list",
-          "cachedResultName": "Time Entries --> Task Codes",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit?usp=drivesdk"
+          "cachedResultName": "Sept 13 - Task Code",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Fcov_H6Pf2iEWdtJUO5VwK_E1CtXCyRmFIGqx42ErXk/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Fcov_H6Pf2iEWdtJUO5VwK_E1CtXCyRmFIGqx42ErXk/edit#gid=0"
         },
         "options": {}
       },
@@ -268,8 +195,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        460,
-        660
+        180,
+        460
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -280,159 +207,12 @@
     },
     {
       "parameters": {
-        "operation": "appendOrUpdate",
-        "documentId": {
-          "__rl": true,
-          "value": "1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI",
-          "mode": "list",
-          "cachedResultName": "Time Entries --> Task Codes",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {},
-          "matchingColumns": [
-            "row_number"
-          ],
-          "schema": [
-            {
-              "id": "row_number",
-              "displayName": "row_number",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Time Entry",
-              "displayName": "Time Entry",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "tc_gpt35",
-              "displayName": "tc_gpt35",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "cost_gpt35",
-              "displayName": "cost_gpt35",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "tc_gpt4",
-              "displayName": "tc_gpt4",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "cost_gpt4",
-              "displayName": "cost_gpt4",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "input_token_count",
-              "displayName": "input_token_count",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {}
           ]
         },
-        "options": {}
-      },
-      "id": "0ba8a1b3-e941-42de-8d25-6c9808f5ec79",
-      "name": "Google Sheets1",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4,
-      "position": [
-        1500,
-        860
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "lMnR0Oj2mNgH09Mh",
-          "name": "[CM] Google Sheets (mar.fm)"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
-      "id": "f6bd61d8-a7d9-416e-bdfd-723bb26d59c0",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        1100,
-        860
-      ]
-    },
-    {
-      "parameters": {
-        "batchSize": 50,
-        "options": {}
-      },
-      "id": "a25267b8-76ce-4948-8261-9ffc30bffc72",
-      "name": "Split In Batches",
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 2,
-      "position": [
-        660,
-        200
-      ]
-    },
-    {
-      "parameters": {
-        "amount": 5,
-        "unit": "seconds"
-      },
-      "id": "38618427-a528-4136-aa70-4bc6a76526c8",
-      "name": "Wait",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [
-        660,
-        420
-      ],
-      "webhookId": "8181ee0a-3451-47fa-9ed6-c725aa9a178c"
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
         "options": {}
       },
       "id": "797c141a-2d52-4cf0-9351-fd85f6ca552a",
@@ -440,8 +220,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        1100,
-        460
+        1020,
+        -60
       ]
     },
     {
@@ -455,7 +235,7 @@
             },
             {
               "name": "prompt",
-              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of the following nine task codes applies to each given time entry (they are provided in the order they usually occur throughout a transaction):\n\n1. Preliminary deal process\n2. Deal structuring and strategy (incl tax & board counsel)\n3. Due diligence\n4. Primary transaction documentation/definitive agreements\n5. Equity documentation\n6. Ancillary agreements (including carveouts & transitions)\n7. Deal management\n8. Regulatory issues (other than antitrust)\n9. Closing\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. Categorize the following:\n\nTime entry: \"Attend to email correspondence; review revised purchase agreement and comments thereto\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"time_entry\"] }}\"\nTask code: "
+              "value": "=You are a highly skilled AI with a specialty in categorizing timekeepers' time entries according to a law firm's standards. You will be given time entries from recent M&A transactions. You are tasked with determining which of nine task codes applies to each given time entry. Here is a list of task codes, with guidelines in parentheticals:\n\n1. Preliminary deal process (Time spent conducting preliminary deal process work, such as negotiating NDAs, setting up a data room, drafting bid letters, financial advisor engagement letters, etc.)\n2. Deal structuring and strategy (Time spent developing the structure and process for the transaction, including setting up newcos, analyzing tax issues and advising the board (e.g. drafting/reviewing banker books, fairness opinions and board minutes).)\n3. Due diligence (Time spent conducting due diligence, regardless of the subject matter.)\n4. Primary transaction documentation/definitive agreements (Time spent drafting, reviewing and negotiating definitive sale documentation, including the purchase agreement (and related auction drafts or term sheets), management warranty deed and disclosure letters/schedules.)\n5. Equity documentation (Time spent on any type of management equity plan, including option plans.  It also includes work related to any shareholder arrangements and any coinvestment(s).)\n6. Ancillary agreements (Time spent drafting, reviewing and negotiating all ancillary documentation, such as carve-out documents and TSAs.)\n7. Deal management (This code should be used judiciously.  Time should be allocated to other task codes where possible.  For example, when coordinating with local counsel, time should be billed to the underlying issue (Due Diligence, Closing, etc.), instead of this task code.  Correspondence should also be billed to the underlying task code, and not this code.)\n8. Regulatory issues (Should only be used for unique, deal-specific regulatory issues, such as telecom, pharma, etc., deals.  Standard regulatory work should be billed to the appropriate task code (Due Diligence, Primary Transaction Documentation, etc.).  Check with your supervisor prior to billing time to this code.)\n9. Closing (Time spent on the closing and immediate post-closing process, including closing documents (not captured by Definitive or Ancillary Agreements), signature pages, funds flow and standard filings.)\n\nThe above task codes are provided in the order they usually occur throughout a transaction. The current transaction commenced on February 15, 2022, and ended on April 8, 2022.\n\nHere's an example, please note that the only value you should return is the task code, with no explanatory or other text. If you can't determine the proper task code, please reply \"[Unknown]\". Categorize the following:\n\nTime entry: \"0.3 hours: Attend to email correspondence; review revised purchase agreement and comments thereto (March 16, 2022)\"\nTask code: Primary transaction documentation/definitive agreements\n\nNow please categorize the following:\n\nTime entry: \"{{ $json[\"TCWorkHrs\"] }} hours: {{ $json[\"TCNarrative\"] }} ({{ $json[\"TCWorkDate\"] }})\"\nTask code: \n"
             }
           ]
         },
@@ -466,8 +246,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        660,
-        660
+        380,
+        460
       ]
     },
     {
@@ -475,17 +255,17 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI",
+          "value": "1Fcov_H6Pf2iEWdtJUO5VwK_E1CtXCyRmFIGqx42ErXk",
           "mode": "list",
-          "cachedResultName": "Time Entries --> Task Codes",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit?usp=drivesdk"
+          "cachedResultName": "Sept 13 - Task Code",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Fcov_H6Pf2iEWdtJUO5VwK_E1CtXCyRmFIGqx42ErXk/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MEInZLV3mgou3bN-rXG4t3msN4ygvhtd3ug8Cp9mdPI/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Fcov_H6Pf2iEWdtJUO5VwK_E1CtXCyRmFIGqx42ErXk/edit#gid=0"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
@@ -505,8 +285,17 @@
               "removed": false
             },
             {
-              "id": "Time Entry",
-              "displayName": "Time Entry",
+              "id": "TCWorkDate",
+              "displayName": "TCWorkDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TCTaskName (Human)",
+              "displayName": "TCTaskName (Human)",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -520,11 +309,12 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
-              "id": "cost_gpt35",
-              "displayName": "cost_gpt35",
+              "id": "TCNarrative",
+              "displayName": "TCNarrative",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -532,8 +322,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "tc_gpt4",
-              "displayName": "tc_gpt4",
+              "id": "TCWAttyLWTitleGrpName",
+              "displayName": "TCWAttyLWTitleGrpName",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -541,17 +331,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "cost_gpt4",
-              "displayName": "cost_gpt4",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "input_token_count",
-              "displayName": "input_token_count",
+              "id": "TCWorkHrs",
+              "displayName": "TCWorkHrs",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -567,7 +348,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1500,
+        960,
         460
       ],
       "credentials": {
@@ -576,6 +357,76 @@
           "name": "[CM] Google Sheets (mar.fm)"
         }
       }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\t\"model\": \"gpt-3.5-turbo\",\n\t\"messages\": [{\n\t\t\"role\": \"system\",\n\t\t\"content\": \"You are a helpful assistant.\"\n\t}, {\n\t\t\"role\": \"user\",\n\t\t\"content\": \"{{ $json[\"prompt\"] }}\"\n\t}]\n}",
+        "options": {}
+      },
+      "id": "f6e2b3d9-257b-4d3f-80f7-c99a28ba6887",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        900,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "27b227a8-061e-4076-ab67-1ced55420079",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        580,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      },
+      "id": "921d8372-d606-42bb-8a40-1b83fc456e55",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        960,
+        260
+      ],
+      "webhookId": "8b35cb19-e9cd-4a44-92a8-23f9c02bf822"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "78195869-8bf9-439a-9ed3-7630dcb0ac38",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        580,
+        460
+      ]
     }
   ],
   "pinData": {},
@@ -585,6 +436,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-29T16:11:06.897Z",
-  "versionId": "252f0cd5-fc3c-4abb-a5a5-26a6763585c7"
+  "updatedAt": "2023-09-13T20:33:11.152Z",
+  "versionId": "812cb5b9-62dd-449c-bb9c-f3268ddba8d7"
 }
