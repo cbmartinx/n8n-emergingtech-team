@@ -79,22 +79,22 @@
         ]
       ]
     },
-    "Wait": {
+    "Merge": {
       "main": [
         [
           {
-            "node": "Split In Batches",
+            "node": "Set - GPT-3.5",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Merge": {
+    "Wait": {
       "main": [
         [
           {
-            "node": "Set - GPT-3.5",
+            "node": "Split In Batches",
             "type": "main",
             "index": 0
           }
@@ -153,11 +153,19 @@
           "string": [
             {
               "name": "tc_gpt35",
-              "value": "={{ $json.message.content }}"
+              "value": "={{ $json.choices[0].message.content }}"
             },
             {
               "name": "row_number",
               "value": "={{ $json.row_number }}"
+            },
+            {
+              "name": "prompt_tokens",
+              "value": "={{ $json.usage.prompt_tokens }}"
+            },
+            {
+              "name": "completion_tokens",
+              "value": "={{ $json.usage.completion_tokens }}"
             }
           ]
         },
@@ -204,25 +212,6 @@
           "name": "[CM] Google Sheets (mar.fm)"
         }
       }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "mergeByFields": {
-          "values": [
-            {}
-          ]
-        },
-        "options": {}
-      },
-      "id": "797c141a-2d52-4cf0-9351-fd85f6ca552a",
-      "name": "Merge - GPT-3.5",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        1020,
-        -60
-      ]
     },
     {
       "parameters": {
@@ -360,33 +349,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://api.openai.com/v1/chat/completions",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer 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"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n\t\"model\": \"gpt-3.5-turbo\",\n\t\"messages\": [{\n\t\t\"role\": \"system\",\n\t\t\"content\": \"You are a helpful assistant.\"\n\t}, {\n\t\t\"role\": \"user\",\n\t\t\"content\": \"{{ $json[\"prompt\"] }}\"\n\t}]\n}",
-        "options": {}
-      },
-      "id": "f6e2b3d9-257b-4d3f-80f7-c99a28ba6887",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        900,
-        -60
-      ]
-    },
-    {
-      "parameters": {
         "options": {}
       },
       "id": "27b227a8-061e-4076-ab67-1ced55420079",
@@ -397,21 +359,6 @@
         580,
         260
       ]
-    },
-    {
-      "parameters": {
-        "amount": 5,
-        "unit": "seconds"
-      },
-      "id": "921d8372-d606-42bb-8a40-1b83fc456e55",
-      "name": "Wait",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [
-        960,
-        260
-      ],
-      "webhookId": "8b35cb19-e9cd-4a44-92a8-23f9c02bf822"
     },
     {
       "parameters": {
@@ -427,6 +374,20 @@
         580,
         460
       ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "32308bc6-bdc2-4a66-94f8-81ad15d401ed",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        960,
+        260
+      ],
+      "webhookId": "e764ba80-5ce7-41ac-9993-38a0a0fc50a1"
     }
   ],
   "pinData": {},
@@ -436,6 +397,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-13T20:33:11.152Z",
-  "versionId": "812cb5b9-62dd-449c-bb9c-f3268ddba8d7"
+  "updatedAt": "2023-09-13T23:46:34.440Z",
+  "versionId": "0ac28d93-a61a-4865-8388-9344738b7018"
 }
