@@ -120,6 +120,7 @@
     {
       "parameters": {
         "resource": "chat",
+        "model": "gpt-4",
         "prompt": {
           "messages": [
             {
@@ -152,7 +153,7 @@
         "values": {
           "string": [
             {
-              "name": "tc_gpt35",
+              "name": "tc_gpt4",
               "value": "={{ $json.choices[0].message.content }}"
             },
             {
@@ -160,11 +161,11 @@
               "value": "={{ $json.row_number }}"
             },
             {
-              "name": "prompt_tokens",
+              "name": "prompt_tokens_4",
               "value": "={{ $json.usage.prompt_tokens }}"
             },
             {
-              "name": "completion_tokens",
+              "name": "completion_tokens_4",
               "value": "={{ $json.usage.completion_tokens }}"
             }
           ]
@@ -377,6 +378,7 @@
     },
     {
       "parameters": {
+        "amount": 3,
         "unit": "seconds"
       },
       "id": "32308bc6-bdc2-4a66-94f8-81ad15d401ed",
@@ -397,6 +399,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-13T23:46:34.440Z",
-  "versionId": "0ac28d93-a61a-4865-8388-9344738b7018"
+  "updatedAt": "2023-09-14T17:59:15.219Z",
+  "versionId": "a357e270-eaa0-4161-816a-6687d00cb676"
 }
