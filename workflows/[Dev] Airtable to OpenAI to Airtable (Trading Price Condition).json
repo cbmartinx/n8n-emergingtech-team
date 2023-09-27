@@ -184,7 +184,7 @@
       "credentials": {
         "openAiApi": {
           "id": "j5vdhSbBHJIsVcNw",
-          "name": "[CM] [$] OpenAI"
+          "name": "[LW] [$] OpenAI"
         }
       }
     },
@@ -214,7 +214,7 @@
       "credentials": {
         "openAiApi": {
           "id": "j5vdhSbBHJIsVcNw",
-          "name": "[CM] [$] OpenAI"
+          "name": "[LW] [$] OpenAI"
         }
       }
     },
@@ -1633,6 +1633,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-25T19:42:51.055Z",
-  "versionId": "94d4b2cf-7655-4909-a3db-99b32c40ab78"
+  "updatedAt": "2023-09-27T16:48:15.660Z",
+  "versionId": "dbfbb12b-0824-4524-8d02-39f9936037fe"
 }
