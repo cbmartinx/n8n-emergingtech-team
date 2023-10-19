@@ -145,6 +145,7 @@
   },
   "createdAt": "2023-08-14T15:39:46.674Z",
   "id": "kQbsnWkvKyzaFM82",
+  "meta": null,
   "name": "[Dev] Airtable to OpenAI to Airtable (Trading Price Condition)",
   "nodes": [
     {
