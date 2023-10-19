@@ -177,6 +177,7 @@
   },
   "createdAt": "2023-08-04T14:02:06.211Z",
   "id": "5z3LjFMi507rv6Bx",
+  "meta": null,
   "name": "[Prod] Backup n8n to Github",
   "nodes": [
     {
