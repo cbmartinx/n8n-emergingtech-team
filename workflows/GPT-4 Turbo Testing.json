@@ -1,0 +1,75 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Read Binary Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Binary Files": {
+      "main": [
+        [
+          {
+            "node": "Read PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-11-21T18:07:02.363Z",
+  "id": "3QWhPdOP5dMkqeCI",
+  "meta": null,
+  "name": "GPT-4 Turbo Testing",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1537b7c7-447d-4fe5-a5ca-bffb3d87872d",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7ab641a2-4e08-4ad6-8e47-29ca37079047",
+      "name": "Read Binary Files",
+      "type": "n8n-nodes-base.readBinaryFiles",
+      "typeVersion": 1,
+      "position": [
+        920,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7b29e748-11e3-40ad-8652-1e991d779665",
+      "name": "Read PDF",
+      "type": "n8n-nodes-base.readPDF",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        320
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-11-21T19:43:34.639Z",
+  "versionId": "b25e5962-be16-4361-9392-0dd489ab354c"
+}
